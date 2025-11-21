@@ -1,43 +1,62 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+"use client"
+
+import { useState, useContext } from "react"
+import { motion } from "framer-motion"
+import { ThemeContext } from "../context/ThemeContext"
 
 export default function Contact() {
+  const { isDark } = useContext(ThemeContext)
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+    name: "",
+    email: "",
+    message: "",
+  })
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
+    e.preventDefault()
+    setSubmitted(true)
     setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' });
-      setSubmitted(false);
-    }, 3000);
-  };
+      setFormData({ name: "", email: "", message: "" })
+      setSubmitted(false)
+    }, 3000)
+  }
 
   return (
-    <section id="contact" className="py-20 px-4 bg-gradient-to-b from-[#0a0e27] via-[#1a0033] to-[#0a0e27] relative overflow-hidden">
+    /* Added light mode support with theme context */
+    <section
+      id="contact"
+      className="py-20 px-4 transition-all duration-300 relative overflow-hidden"
+      style={{
+        background: isDark
+          ? "linear-gradient(to-b, rgba(10, 14, 39, 0.9), rgba(26, 13, 62, 0.9))"
+          : "linear-gradient(to-b, rgba(245, 247, 250, 0.95), rgba(232, 236, 241, 0.95))",
+      }}
+    >
       <motion.div
-        className="absolute top-20 left-10 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl"
+        className="absolute top-20 left-10 w-80 h-80 rounded-full blur-3xl"
         animate={{ y: [0, 50, 0], x: [0, -50, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
+        transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
+        style={{
+          background: isDark ? "rgba(0, 217, 255, 0.08)" : "rgba(138, 43, 226, 0.06)",
+        }}
       />
 
       <motion.div
-        className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
+        className="absolute bottom-10 right-10 w-96 h-96 rounded-full blur-3xl"
         animate={{ y: [0, -50, 0], x: [0, 50, 0] }}
-        transition={{ duration: 12, repeat: Infinity, delay: 0.5 }}
+        transition={{ duration: 12, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
+        style={{
+          background: isDark ? "rgba(64, 0, 128, 0.08)" : "rgba(138, 43, 226, 0.08)",
+        }}
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -48,21 +67,21 @@ export default function Contact() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <h2 
+          <h2
             className="text-5xl md:text-6xl font-black mb-4"
             style={{
-              color: '#00ff88',
-              textShadow: '0 0 30px rgba(0, 255, 136, 0.8)',
-              fontFamily: 'Orbitron, monospace',
-              letterSpacing: '0.1em',
+              color: isDark ? "#00d9ff" : "#4000ff",
+              textShadow: isDark ? "0 0 30px rgba(0, 217, 255, 0.8)" : "0 0 20px rgba(64, 0, 128, 0.3)",
+              fontFamily: "Orbitron, monospace",
+              letterSpacing: "0.1em",
             }}
           >
             [ CONTACT COMMAND ]
           </h2>
-          <p 
-            className="text-slate-300 text-lg"
+          <p
+            className="text-lg"
             style={{
-              color: 'rgba(0, 255, 136, 0.7)',
+              color: isDark ? "rgba(0, 217, 255, 0.7)" : "rgba(64, 0, 128, 0.6)",
             }}
           >
             REACH OUR CENTRAL COMMAND
@@ -80,47 +99,50 @@ export default function Contact() {
           >
             {[
               {
-                icon: '📡',
-                title: 'EMAIL',
-                content: 'hello@ignition2025.com',
+                icon: "📡",
+                title: "EMAIL",
+                content: "igNITion@gbu.ac.in",
               },
               {
-                icon: '📞',
-                title: 'SIGNAL',
-                content: '+91 XXXXX XXXXX',
+                icon: "📞",
+                title: "SIGNAL",
+                content: "+91 XXXXX XXXXX",
               },
               {
-                icon: '📍',
-                title: 'BASE',
-                content: 'Gautam Buddha University, Greater Noida',
+                icon: "📍",
+                title: "BASE",
+                content: "Gautam Buddha University, Greater Noida",
               },
               {
-                icon: '🔗',
-                title: 'NETWORK',
-                content: 'Instagram • Twitter • LinkedIn',
+                icon: "🔗",
+                title: "NETWORK",
+                content: "Instagram • Twitter • LinkedIn",
               },
             ].map((item, index) => (
               <motion.div
                 key={index}
-                className="flex gap-4 items-start group hud-frame p-4"
+                className="flex gap-4 items-start group hud-frame p-4 transition-all duration-300"
                 whileHover={{ x: 10 }}
                 style={{
-                  background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-                  border: '2px solid rgba(0, 255, 136, 0.2)',
+                  background: isDark
+                    ? "linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 255, 0.05))"
+                    : "linear-gradient(135deg, rgba(64, 0, 128, 0.08), rgba(138, 43, 226, 0.05))",
+                  border: isDark ? "2px solid rgba(0, 217, 255, 0.2)" : "2px solid rgba(64, 0, 128, 0.2)",
+                  boxShadow: isDark ? "0 0 15px rgba(0, 217, 255, 0.1)" : "0 0 15px rgba(64, 0, 128, 0.05)",
                 }}
               >
                 <span className="text-3xl mt-2">{item.icon}</span>
                 <div>
-                  <h3 
+                  <h3
                     className="text-lg font-bold mb-2"
                     style={{
-                      color: '#00ff88',
-                      fontFamily: 'Orbitron, monospace',
+                      color: isDark ? "#00d9ff" : "#4000ff",
+                      fontFamily: "Orbitron, monospace",
                     }}
                   >
                     [{item.title}]
                   </h3>
-                  <p className="text-slate-400">{item.content}</p>
+                  <p style={{ color: isDark ? "#a0aec0" : "#6b7280" }}>{item.content}</p>
                 </div>
               </motion.div>
             ))}
@@ -136,13 +158,17 @@ export default function Contact() {
             viewport={{ once: true }}
           >
             <motion.div
-              className="hud-frame"
+              className="hud-frame transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-                border: '2px solid rgba(0, 255, 136, 0.3)',
-                padding: '2px',
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 255, 0.05))"
+                  : "linear-gradient(135deg, rgba(64, 0, 128, 0.08), rgba(138, 43, 226, 0.05))",
+                border: isDark ? "2px solid rgba(0, 217, 255, 0.3)" : "2px solid rgba(64, 0, 128, 0.3)",
+                padding: "2px",
               }}
-              whileHover={{ boxShadow: '0 0 20px rgba(0, 255, 136, 0.5)' }}
+              whileHover={{
+                boxShadow: isDark ? "0 0 20px rgba(0, 217, 255, 0.5)" : "0 0 20px rgba(64, 0, 128, 0.4)",
+              }}
             >
               <input
                 type="text"
@@ -151,21 +177,27 @@ export default function Contact() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full bg-[#0a0e27] text-cyan-400 placeholder-slate-600 p-4 outline-none focus:text-green-400 transition-colors"
+                className="w-full p-4 outline-none transition-colors"
                 style={{
-                  fontFamily: 'Orbitron, monospace',
+                  background: isDark ? "#0a0e27" : "#f5f7fa",
+                  color: isDark ? "#00d9ff" : "#4000ff",
+                  fontFamily: "Orbitron, monospace",
                 }}
               />
             </motion.div>
 
             <motion.div
-              className="hud-frame"
+              className="hud-frame transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-                border: '2px solid rgba(0, 255, 136, 0.3)',
-                padding: '2px',
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 255, 0.05))"
+                  : "linear-gradient(135deg, rgba(64, 0, 128, 0.08), rgba(138, 43, 226, 0.05))",
+                border: isDark ? "2px solid rgba(0, 217, 255, 0.3)" : "2px solid rgba(64, 0, 128, 0.3)",
+                padding: "2px",
               }}
-              whileHover={{ boxShadow: '0 0 20px rgba(0, 255, 136, 0.5)' }}
+              whileHover={{
+                boxShadow: isDark ? "0 0 20px rgba(0, 217, 255, 0.5)" : "0 0 20px rgba(64, 0, 128, 0.4)",
+              }}
             >
               <input
                 type="email"
@@ -174,21 +206,27 @@ export default function Contact() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full bg-[#0a0e27] text-cyan-400 placeholder-slate-600 p-4 outline-none focus:text-green-400 transition-colors"
+                className="w-full p-4 outline-none transition-colors"
                 style={{
-                  fontFamily: 'Orbitron, monospace',
+                  background: isDark ? "#0a0e27" : "#f5f7fa",
+                  color: isDark ? "#00d9ff" : "#4000ff",
+                  fontFamily: "Orbitron, monospace",
                 }}
               />
             </motion.div>
 
             <motion.div
-              className="hud-frame"
+              className="hud-frame transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-                border: '2px solid rgba(0, 255, 136, 0.3)',
-                padding: '2px',
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 153, 255, 0.05))"
+                  : "linear-gradient(135deg, rgba(64, 0, 128, 0.08), rgba(138, 43, 226, 0.05))",
+                border: isDark ? "2px solid rgba(0, 217, 255, 0.3)" : "2px solid rgba(64, 0, 128, 0.3)",
+                padding: "2px",
               }}
-              whileHover={{ boxShadow: '0 0 20px rgba(0, 255, 136, 0.5)' }}
+              whileHover={{
+                boxShadow: isDark ? "0 0 20px rgba(0, 217, 255, 0.5)" : "0 0 20px rgba(64, 0, 128, 0.4)",
+              }}
             >
               <textarea
                 name="message"
@@ -197,22 +235,31 @@ export default function Contact() {
                 onChange={handleChange}
                 required
                 rows="5"
-                className="w-full bg-[#0a0e27] text-cyan-400 placeholder-slate-600 p-4 outline-none focus:text-green-400 transition-colors resize-none"
+                className="w-full p-4 outline-none resize-none transition-colors"
                 style={{
-                  fontFamily: 'Orbitron, monospace',
+                  background: isDark ? "#0a0e27" : "#f5f7fa",
+                  color: isDark ? "#00d9ff" : "#4000ff",
+                  fontFamily: "Orbitron, monospace",
                 }}
               />
             </motion.div>
 
             <motion.button
               type="submit"
-              className="neon-btn w-full py-4 rounded-none text-lg"
+              className="neon-btn w-full py-4 rounded-none text-lg transition-all duration-300"
               whileHover={{
-                boxShadow: '0 0 30px rgba(0, 255, 136, 0.8), inset 0 0 20px rgba(0, 255, 136, 0.3)',
+                boxShadow: isDark
+                  ? "0 0 30px rgba(0, 217, 255, 0.8), inset 0 0 20px rgba(0, 217, 255, 0.3)"
+                  : "0 0 30px rgba(64, 0, 128, 0.6), inset 0 0 20px rgba(64, 0, 128, 0.2)",
               }}
               whileTap={{ scale: 0.95 }}
+              style={{
+                borderColor: isDark ? "rgba(0, 217, 255, 0.7)" : "rgba(64, 0, 128, 0.7)",
+                color: isDark ? "#00d9ff" : "#4000ff",
+                background: isDark ? "rgba(0, 217, 255, 0.1)" : "rgba(64, 0, 128, 0.1)",
+              }}
             >
-              {submitted ? '[ TRANSMISSION SENT ]' : '[ SEND TRANSMISSION ]'}
+              {submitted ? "[ TRANSMISSION SENT ]" : "[ SEND TRANSMISSION ]"}
             </motion.button>
 
             {submitted && (
@@ -221,8 +268,8 @@ export default function Contact() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 style={{
-                  color: '#00ff88',
-                  textShadow: '0 0 10px rgba(0, 255, 136, 0.8)',
+                  color: isDark ? "#00d9ff" : "#4000ff",
+                  textShadow: isDark ? "0 0 10px rgba(0, 217, 255, 0.8)" : "0 0 10px rgba(64, 0, 128, 0.4)",
                 }}
               >
                 SIGNAL RECEIVED! AWAITING RESPONSE...
@@ -232,5 +279,5 @@ export default function Contact() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,70 +14,71 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Updated to classic dark theme - navy/charcoal with gold and silver accents */
 body {
-  background: linear-gradient(135deg, #0d0221 0%, #1a0a3e 40%, #0d0221 100%);
-  color: #00d9ff;
-  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #0a0e1a;
+  color: #c9a961;
+  font-family: "Inter", system-ui, sans-serif;
   overflow-x: hidden;
   position: relative;
 }
 
-/* Enhanced 3D cyberpunk background with intense color scheme */
+/* Radial gradients for classic dark theme */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 0, 100, 0.05) 0%, transparent 80%);
+  background: radial-gradient(circle at 20% 50%, rgba(201, 169, 97, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(169, 145, 102, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(192, 192, 192, 0.05) 0%, transparent 80%);
   pointer-events: none;
   z-index: -1;
 }
 
-/* Gaming scrollbar with intense magenta-cyan gradient */
+/* Updated scrollbar to gold and silver gradient */
 ::-webkit-scrollbar {
   width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(13, 2, 33, 0.5);
-  border-left: 1px solid rgba(255, 0, 255, 0.15);
+  background: rgba(10, 14, 26, 0.5);
+  border-left: 1px solid rgba(201, 169, 97, 0.15);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff00ff, #00d9ff, #ff0088);
+  background: linear-gradient(180deg, #c9a961, #a89166, #c0c0c0);
   border-radius: 0;
-  box-shadow: 0 0 20px rgba(255, 0, 255, 0.8), inset 0 0 10px rgba(255, 0, 255, 0.4);
+  box-shadow: 0 0 20px rgba(201, 169, 97, 0.6), inset 0 0 10px rgba(201, 169, 97, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff00ff, #00ffff, #ff0088);
-  box-shadow: 0 0 30px rgba(255, 0, 255, 1), inset 0 0 15px rgba(255, 0, 255, 0.6);
+  background: linear-gradient(180deg, #d4b56f, #b8a176, #d0d0d0);
+  box-shadow: 0 0 30px rgba(201, 169, 97, 0.8), inset 0 0 15px rgba(201, 169, 97, 0.5);
 }
 
 ::selection {
-  background: #ff00ff;
-  color: #0d0221;
-  text-shadow: 0 0 20px rgba(255, 0, 255, 1);
+  background: #c9a961;
+  color: #0a0e1a;
+  text-shadow: 0 0 20px rgba(201, 169, 97, 0.8);
 }
 
-/* Intense gradient text with magenta-cyan pulsing */
+/* Updated gradient text with gold and silver */
 .gradient-text {
-  background: linear-gradient(90deg, #ff00ff 0%, #00d9ff 33%, #ff0088 66%, #ff00ff 100%);
+  background: linear-gradient(90deg, #c9a961 0%, #a89166 33%, #c0c0c0 66%, #c9a961 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 300% 100%;
   animation: gradient-shift 3s ease infinite, glow-pulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.8));
+  filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.6));
 }
 
 @keyframes gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% center;
   }
   50% {
@@ -86,31 +87,27 @@ body::before {
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.8));
+  0%,
+  100% {
+    filter: drop-shadow(0 0 15px rgba(201, 169, 97, 0.6));
   }
   50% {
-    filter: drop-shadow(0 0 30px rgba(255, 0, 255, 1)) drop-shadow(0 0 40px rgba(0, 217, 255, 0.8));
+    filter: drop-shadow(0 0 30px rgba(201, 169, 97, 1)) drop-shadow(0 0 40px rgba(169, 145, 102, 0.6));
   }
 }
 
+/* Updated glow effect with gold accents */
 .glow-effect {
-  box-shadow: 
-    0 0 15px rgba(255, 0, 255, 0.6),
-    0 0 30px rgba(0, 217, 255, 0.4),
-    0 0 45px rgba(255, 0, 100, 0.3),
-    inset 0 0 20px rgba(255, 0, 255, 0.15);
-  border: 1px solid rgba(255, 0, 255, 0.5);
+  box-shadow: 0 0 15px rgba(201, 169, 97, 0.5), 0 0 30px rgba(169, 145, 102, 0.3), 0 0 45px rgba(192, 192, 192, 0.2),
+    inset 0 0 20px rgba(201, 169, 97, 0.1);
+  border: 1px solid rgba(201, 169, 97, 0.4);
 }
 
 .soft-shadow {
-  box-shadow: 
-    0 0 25px rgba(255, 0, 255, 0.4),
-    0 0 50px rgba(0, 217, 255, 0.3),
-    0 0 75px rgba(255, 0, 100, 0.15);
+  box-shadow: 0 0 25px rgba(201, 169, 97, 0.3), 0 0 50px rgba(169, 145, 102, 0.2), 0 0 75px rgba(192, 192, 192, 0.1);
 }
 
-/* Enhanced scanning line with magenta neon */
+/* Scan line animation with gold */
 @keyframes scan-line {
   0% {
     transform: translateY(-100%);
@@ -126,54 +123,45 @@ body::before {
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 0, 255, 0.8), 
-    rgba(0, 217, 255, 0.6),
-    transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.8), rgba(169, 145, 102, 0.6), transparent);
   pointer-events: none;
   animation: scan-line 2s linear infinite;
   z-index: 9999;
-  box-shadow: 0 0 15px rgba(255, 0, 255, 1);
+  box-shadow: 0 0 15px rgba(201, 169, 97, 0.8);
 }
 
-/* Enhanced neon button with magenta accent */
+/* Neon button with gold styling */
 .neon-btn {
-  border: 2px solid rgba(255, 0, 255, 0.7);
-  background: rgba(255, 0, 255, 0.1);
-  color: #ff00ff;
-  font-family: 'Orbitron', sans-serif;
+  border: 2px solid rgba(201, 169, 97, 0.7);
+  background: rgba(201, 169, 97, 0.1);
+  color: #c9a961;
+  font-family: "Orbitron", sans-serif;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 3px;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 
-    inset 0 0 15px rgba(255, 0, 255, 0.25),
-    0 0 20px rgba(255, 0, 255, 0.6),
-    0 0 40px rgba(0, 217, 255, 0.3);
+  box-shadow: inset 0 0 15px rgba(201, 169, 97, 0.2), 0 0 20px rgba(201, 169, 97, 0.5), 0 0 40px
+    rgba(169, 145, 102, 0.2);
   position: relative;
   overflow: hidden;
 }
 
 .neon-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.3), transparent);
   transition: left 0.5s;
 }
 
 .neon-btn:hover {
-  background: rgba(255, 0, 255, 0.2);
-  box-shadow: 
-    inset 0 0 25px rgba(255, 0, 255, 0.4),
-    0 0 30px rgba(255, 0, 255, 1),
-    0 0 50px rgba(255, 0, 255, 0.8),
-    0 0 70px rgba(0, 217, 255, 0.6);
-  text-shadow: 0 0 15px rgba(255, 0, 255, 1);
+  background: rgba(201, 169, 97, 0.2);
+  box-shadow: inset 0 0 25px rgba(201, 169, 97, 0.3), 0 0 30px rgba(201, 169, 97, 0.9), 0 0 50px rgba(201, 169, 97, 0.7),
+    0 0 70px rgba(169, 145, 102, 0.5);
+  text-shadow: 0 0 15px rgba(201, 169, 97, 0.9);
   transform: translateY(-3px) scale(1.02);
 }
 
@@ -181,21 +169,20 @@ body::before {
   left: 100%;
 }
 
-/* Enhanced holographic effect */
+/* Hologram effect with gold theme */
 .hologram {
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 217, 255, 0.08));
-  border: 1px solid rgba(255, 0, 255, 0.4);
-  box-shadow: 
-    0 0 20px rgba(255, 0, 255, 0.3),
-    inset 0 0 20px rgba(0, 217, 255, 0.15),
-    0 0 40px rgba(255, 0, 100, 0.15);
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.08), rgba(169, 145, 102, 0.06));
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  box-shadow: 0 0 20px rgba(201, 169, 97, 0.2), inset 0 0 20px rgba(201, 169, 97, 0.1), 0 0 40px
+    rgba(192, 192, 192, 0.1);
   backdrop-filter: blur(15px);
 }
 
-/* Enhanced particle effect with magenta-cyan colors */
+/* Particle effect with gold */
 @keyframes float-particle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0);
     opacity: 0.6;
   }
@@ -211,16 +198,15 @@ body::before {
 }
 
 .particle-effect::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 200%;
   height: 200%;
   top: -50%;
   left: -50%;
-  background-image: 
-    radial-gradient(circle, rgba(255, 0, 255, 0.9) 1px, transparent 1px),
-    radial-gradient(circle, rgba(0, 217, 255, 0.7) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255, 0, 100, 0.5) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(201, 169, 97, 0.8) 1px, transparent 1px),
+    radial-gradient(circle, rgba(169, 145, 102, 0.6) 1px, transparent 1px),
+    radial-gradient(circle, rgba(192, 192, 192, 0.4) 1px, transparent 1px);
   background-size: 50px 50px, 80px 80px, 100px 100px;
   background-position: 0 0, 10px 10px, 20px 20px;
   animation: float-particle 8s linear infinite;
@@ -228,7 +214,6 @@ body::before {
   z-index: -1;
 }
 
-/* Enhanced glitch effect for text */
 .glitch {
   position: relative;
   display: inline-block;
@@ -246,17 +231,17 @@ body::before {
 
 .glitch::before {
   animation: glitch-anim 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-  color: #00d9ff;
+  color: #c9a961;
   z-index: -1;
-  text-shadow: -2px 0 #ff00ff;
+  text-shadow: -2px 0 #a89166;
   clip: rect(0, 900px, 0, 0);
 }
 
 .glitch::after {
   animation: glitch-anim2 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite reverse;
-  color: #ff00ff;
+  color: #a89166;
   z-index: -2;
-  text-shadow: -2px 0 #00d9ff;
+  text-shadow: -2px 0 #c9a961;
   clip: rect(0, 0, 0, 900px);
 }
 
@@ -278,22 +263,20 @@ body::before {
   }
 }
 
-/* Enhanced HUD frame effect */
+/* HUD frame with gold styling */
 .hud-frame {
-  border: 2px solid rgba(255, 0, 255, 0.5);
+  border: 2px solid rgba(201, 169, 97, 0.5);
   border-radius: 0;
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 0, 255, 0.08), rgba(0, 217, 255, 0.06));
-  box-shadow: 
-    inset 0 0 25px rgba(255, 0, 255, 0.1),
-    0 0 25px rgba(255, 0, 255, 0.3);
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.08), rgba(169, 145, 102, 0.06));
+  box-shadow: inset 0 0 25px rgba(201, 169, 97, 0.1), 0 0 25px rgba(201, 169, 97, 0.2);
 }
 
 .hud-frame::before,
 .hud-frame::after {
-  content: '';
+  content: "";
   position: absolute;
-  background: linear-gradient(90deg, rgba(255, 0, 255, 0.6), rgba(0, 217, 255, 0.4));
+  background: linear-gradient(90deg, rgba(201, 169, 97, 0.6), rgba(169, 145, 102, 0.4));
 }
 
 .hud-frame::before {
@@ -310,17 +293,14 @@ body::before {
   height: 2px;
 }
 
-/* Enhanced pulsing glow */
+/* Pulse glow with gold */
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 
-      0 0 15px rgba(255, 0, 255, 0.5),
-      inset 0 0 20px rgba(255, 0, 255, 0.15);
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.4), inset 0 0 20px rgba(201, 169, 97, 0.1);
   }
   50% {
-    box-shadow: 
-      0 0 35px rgba(255, 0, 255, 1),
-      inset 0 0 30px rgba(255, 0, 255, 0.25);
+    box-shadow: 0 0 35px rgba(201, 169, 97, 0.8), inset 0 0 30px rgba(201, 169, 97, 0.2);
   }
 }
 
@@ -328,7 +308,7 @@ body::before {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Cyberpunk grid background animation with magenta */
+/* Cyberpunk grid with gold */
 @keyframes grid-move {
   0% {
     background-position: 0 0;
@@ -339,14 +319,34 @@ body::before {
 }
 
 .cyber-grid {
-  background-image: 
-    linear-gradient(0deg, transparent 24%, rgba(255, 0, 255, 0.08) 25%, rgba(255, 0, 255, 0.08) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.08) 75%, rgba(255, 0, 255, 0.08) 76%, transparent 77%, transparent),
-    linear-gradient(90deg, transparent 24%, rgba(255, 0, 255, 0.08) 25%, rgba(255, 0, 255, 0.08) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.08) 75%, rgba(255, 0, 255, 0.08) 76%, transparent 77%, transparent);
+  background-image: linear-gradient(
+      0deg,
+      transparent 24%,
+      rgba(201, 169, 97, 0.08) 25%,
+      rgba(201, 169, 97, 0.08) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(201, 169, 97, 0.08) 75%,
+      rgba(201, 169, 97, 0.08) 76%,
+      transparent 77%,
+      transparent
+    ),
+    linear-gradient(
+      90deg,
+      transparent 24%,
+      rgba(201, 169, 97, 0.08) 25%,
+      rgba(201, 169, 97, 0.08) 26%,
+      transparent 27%,
+      transparent 74%,
+      rgba(201, 169, 97, 0.08) 75%,
+      rgba(201, 169, 97, 0.08) 76%,
+      transparent 77%,
+      transparent
+    );
   background-size: 50px 50px;
   animation: grid-move 25s linear infinite;
 }
 
-/* Screen glitch effect */
 @keyframes screen-glitch {
   0% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -372,7 +372,6 @@ body::before {
   animation: screen-glitch 0.5s infinite;
 }
 
-/* 3D perspective and transform effects */
 .perspective-3d {
   perspective: 1200px;
   transform-style: preserve-3d;

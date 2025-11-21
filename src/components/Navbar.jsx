@@ -1,13 +1,17 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client"
+
+import { useState, useContext } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ThemeContext } from "../context/ThemeContext"
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const { isDark, toggleTheme } = useContext(ThemeContext)
 
   const menuVariants = {
-    closed: { opacity: 0, y: -20, pointerEvents: 'none' },
-    open: { opacity: 1, y: 0, pointerEvents: 'auto' },
-  };
+    closed: { opacity: 0, y: -20, pointerEvents: "none" },
+    open: { opacity: 1, y: 0, pointerEvents: "auto" },
+  }
 
   const linkVariants = {
     closed: { opacity: 0, x: -20 },
@@ -16,22 +20,27 @@ export default function Navbar() {
       x: 0,
       transition: { delay: i * 0.1 },
     }),
-  };
+  }
 
-  const navItems = ['About', 'Events', 'Sponsors', 'Gallery', 'Contact'];
+  const navItems = ["About", "Events", "Sponsors", "Gallery", "Contact"]
 
   return (
-    <motion.nav 
+    <motion.nav
       className="fixed top-0 w-full z-40 pt-0"
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div 
-        className="absolute inset-0 h-20 bg-gradient-to-b from-[#0a0e27] via-[#0a0e27] to-transparent backdrop-blur-2xl border-b-2"
+      <div
+        className="absolute inset-0 h-20 backdrop-blur-2xl border-b-2 transition-all duration-300"
         style={{
-          borderColor: 'rgba(0, 255, 136, 0.3)',
-          boxShadow: '0 0 30px rgba(0, 255, 136, 0.2), inset 0 -1px 0 rgba(0, 255, 136, 0.1)',
+          background: isDark
+            ? "linear-gradient(to bottom, rgba(10, 14, 39, 0.9), rgba(10, 14, 39, 0.7), transparent)"
+            : "linear-gradient(to bottom, rgba(245, 247, 250, 0.9), rgba(245, 247, 250, 0.7), transparent)",
+          borderColor: isDark ? "rgba(0, 255, 136, 0.3)" : "rgba(138, 43, 226, 0.3)",
+          boxShadow: isDark
+            ? "0 0 30px rgba(0, 255, 136, 0.2), inset 0 -1px 0 rgba(0, 255, 136, 0.1)"
+            : "0 0 30px rgba(138, 43, 226, 0.1), inset 0 -1px 0 rgba(138, 43, 226, 0.1)",
         }}
       />
 
@@ -41,36 +50,42 @@ export default function Navbar() {
           whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.95 }}
           animate={{
-            textShadow: [
-              '0 0 15px rgba(0, 255, 136, 0.6)',
-              '0 0 30px rgba(0, 255, 136, 0.9)',
-              '0 0 15px rgba(0, 255, 136, 0.6)',
-            ],
+            textShadow: isDark
+              ? [
+                  "0 0 15px rgba(0, 255, 136, 0.6)",
+                  "0 0 30px rgba(0, 255, 136, 0.9)",
+                  "0 0 15px rgba(0, 255, 136, 0.6)",
+                ]
+              : [
+                  "0 0 15px rgba(138, 43, 226, 0.4)",
+                  "0 0 30px rgba(138, 43, 226, 0.6)",
+                  "0 0 15px rgba(138, 43, 226, 0.4)",
+                ],
           }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
           style={{
-            color: '#00ff88',
-            fontFamily: 'Orbitron, monospace',
-            letterSpacing: '0.1em',
+            color: isDark ? "#00ff88" : "#8a2be2",
+            fontFamily: "Orbitron, monospace",
+            letterSpacing: "0.1em",
           }}
         >
           igNITion
         </motion.div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-12">
+        <div className="hidden md:flex gap-12 items-center">
           {navItems.map((item, i) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
               className="font-bold text-sm uppercase relative group"
               style={{
-                color: 'rgba(0, 255, 136, 0.7)',
-                fontFamily: 'Orbitron, monospace',
-                letterSpacing: '0.08em',
+                color: isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)",
+                fontFamily: "Orbitron, monospace",
+                letterSpacing: "0.08em",
               }}
               whileHover={{
-                color: '#00ff88',
+                color: isDark ? "#00ff88" : "#8a2be2",
               }}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -79,60 +94,99 @@ export default function Navbar() {
               <motion.span
                 className="relative"
                 whileHover={{
-                  textShadow: '0 0 10px rgba(0, 255, 136, 0.9)',
+                  textShadow: isDark ? "0 0 10px rgba(0, 255, 136, 0.9)" : "0 0 10px rgba(138, 43, 226, 0.8)",
                 }}
               >
                 [{item}]
               </motion.span>
               <motion.span
-                className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-green-500"
-                whileHover={{ width: '100%' }}
+                className="absolute -bottom-1 left-0 w-0 h-0.5 rounded-full"
+                style={{
+                  background: isDark
+                    ? "linear-gradient(90deg, #00ff88, #00ff88)"
+                    : "linear-gradient(90deg, #8a2be2, #8a2be2)",
+                }}
+                whileHover={{ width: "100%" }}
                 transition={{ duration: 0.3 }}
               />
             </motion.a>
           ))}
+
+          <motion.button
+            onClick={toggleTheme}
+            className="px-4 py-2 rounded-lg font-bold text-sm uppercase transition-all"
+            style={{
+              background: isDark ? "rgba(0, 255, 136, 0.1)" : "rgba(138, 43, 226, 0.1)",
+              color: isDark ? "#00ff88" : "#8a2be2",
+              border: isDark ? "1px solid rgba(0, 255, 136, 0.3)" : "1px solid rgba(138, 43, 226, 0.3)",
+              fontFamily: "Orbitron, monospace",
+            }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: isDark ? "0 0 15px rgba(0, 255, 136, 0.5)" : "0 0 15px rgba(138, 43, 226, 0.5)",
+            }}
+          >
+            {isDark ? "☀️ Light" : "🌙 Dark"}
+          </motion.button>
         </div>
 
         {/* Mobile Menu Button */}
-        <motion.button
-          className="md:hidden relative w-10 h-10 flex items-center justify-center"
-          onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 0.9 }}
-        >
-          <div 
-            className="relative w-6 h-5"
-            style={{
-              boxShadow: '0 0 15px rgba(0, 153, 255, 0.5)',
-            }}
+        <div className="md:hidden flex items-center gap-4">
+          <motion.button onClick={toggleTheme} className="text-xl" whileTap={{ scale: 0.9 }}>
+            {isDark ? "☀️" : "🌙"}
+          </motion.button>
+
+          <motion.button
+            className="relative w-10 h-10 flex items-center justify-center"
+            onClick={() => setIsOpen(!isOpen)}
+            whileTap={{ scale: 0.9 }}
           >
-            <motion.span
-              className="absolute w-full h-0.5 bg-cyan-500"
-              animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.span
-              className="absolute w-full h-0.5 bg-cyan-500 top-2"
-              animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.span
-              className="absolute w-full h-0.5 bg-cyan-500 bottom-0"
-              animate={isOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        </motion.button>
+            <div
+              className="relative w-6 h-5"
+              style={{
+                boxShadow: isDark ? "0 0 15px rgba(0, 153, 255, 0.5)" : "0 0 15px rgba(138, 43, 226, 0.3)",
+              }}
+            >
+              <motion.span
+                className="absolute w-full h-0.5 rounded-full"
+                style={{
+                  background: isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)",
+                }}
+                animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.span
+                className="absolute w-full h-0.5 top-2 rounded-full"
+                style={{
+                  background: isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)",
+                }}
+                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.span
+                className="absolute w-full h-0.5 bottom-0 rounded-full"
+                style={{
+                  background: isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)",
+                }}
+                animate={isOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          </motion.button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden absolute top-20 right-0 left-0 backdrop-blur-xl border-b-2"
+            className="md:hidden absolute top-20 right-0 left-0 backdrop-blur-xl border-b-2 transition-all duration-300"
             style={{
-              borderColor: 'rgba(0, 255, 136, 0.3)',
-              background: 'linear-gradient(180deg, rgba(10, 14, 39, 0.95), rgba(26, 0, 51, 0.9))',
-              boxShadow: '0 10px 40px rgba(0, 255, 136, 0.1)',
+              borderColor: isDark ? "rgba(0, 255, 136, 0.3)" : "rgba(138, 43, 226, 0.3)",
+              background: isDark
+                ? "linear-gradient(180deg, rgba(10, 14, 39, 0.95), rgba(26, 0, 51, 0.9))"
+                : "linear-gradient(180deg, rgba(245, 247, 250, 0.95), rgba(240, 230, 245, 0.9))",
+              boxShadow: isDark ? "0 10px 40px rgba(0, 255, 136, 0.1)" : "0 10px 40px rgba(138, 43, 226, 0.1)",
             }}
             initial="closed"
             animate="open"
@@ -146,9 +200,9 @@ export default function Navbar() {
                   href={`#${item.toLowerCase()}`}
                   className="block px-4 py-3 border-l-2 font-bold text-sm uppercase transition-all"
                   style={{
-                    color: 'rgba(0, 255, 136, 0.7)',
-                    borderColor: 'rgba(0, 255, 136, 0.3)',
-                    fontFamily: 'Orbitron, monospace',
+                    color: isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)",
+                    borderColor: isDark ? "rgba(0, 255, 136, 0.3)" : "rgba(138, 43, 226, 0.3)",
+                    fontFamily: "Orbitron, monospace",
                   }}
                   custom={i}
                   variants={linkVariants}
@@ -158,10 +212,10 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   whileHover={{
                     x: 10,
-                    color: '#00ff88',
-                    borderColor: '#00ff88',
-                    background: 'rgba(0, 255, 136, 0.1)',
-                    textShadow: '0 0 10px rgba(0, 255, 136, 0.8)',
+                    color: isDark ? "#00ff88" : "#8a2be2",
+                    borderColor: isDark ? "#00ff88" : "#8a2be2",
+                    background: isDark ? "rgba(0, 255, 136, 0.1)" : "rgba(138, 43, 226, 0.1)",
+                    textShadow: isDark ? "0 0 10px rgba(0, 255, 136, 0.8)" : "0 0 10px rgba(138, 43, 226, 0.8)",
                   }}
                 >
                   [{item}]
@@ -172,5 +226,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </motion.nav>
-  );
+  )
 }

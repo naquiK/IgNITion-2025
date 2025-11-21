@@ -1,300 +1,226 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { motion } from 'framer-motion';
+"use client"
+
+import { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { motion } from "framer-motion"
 
 export default function Loader({ onLoadComplete }) {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const progressRef = useRef(null);
-  const scanlineRef = useRef(null);
-  const coresRef = useRef([]);
+  const containerRef = useRef(null)
+  const textRef = useRef(null)
+  const progressRef = useRef(null)
+  const scanlineRef = useRef(null)
+  const coresRef = useRef([])
 
   useEffect(() => {
-    const container = containerRef.current;
-    const text = textRef.current;
-    const progress = progressRef.current;
-    const scanline = scanlineRef.current;
+    const container = containerRef.current
+    const text = textRef.current
+    const progress = progressRef.current
+    const scanline = scanlineRef.current
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline()
 
     tl.to(container, {
-      duration: 0.5,
+      duration: 0.3,
       opacity: 1,
     })
-      .to(text, {
-        duration: 2,
-        opacity: 1,
-        y: 0,
-        rotationX: 0,
-        scale: 1,
-        ease: 'back.out',
-      }, 0.2)
-      .to(progress, {
-        duration: 4,
-        width: '100%',
-        ease: 'power2.inOut',
-      }, 0)
-      .to(scanline, {
-        duration: 3.5,
-        height: '100%',
-        ease: 'power1.inOut',
-      }, 0)
-      .to(container, {
-        duration: 1,
-        opacity: 0,
-        delay: 1,
-        onComplete: () => {
-          onLoadComplete();
+      .to(
+        text,
+        {
+          duration: 0.8,
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          scale: 1,
+          ease: "back.out",
         },
-      });
+        0.05,
+      )
+      .to(
+        progress,
+        {
+          duration: 1.8,
+          width: "100%",
+          ease: "power2.inOut",
+        },
+        0,
+      )
+      .to(
+        scanline,
+        {
+          duration: 2.2,
+          height: "100%",
+          ease: "power1.inOut",
+        },
+        0,
+      )
+      .to(container, {
+        duration: 0.6,
+        opacity: 0,
+        delay: 0.2,
+        onComplete: () => {
+          onLoadComplete()
+        },
+      })
 
-    const glitchTl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+    const glitchTl = gsap.timeline({ repeat: -1, repeatDelay: 1.2 })
     glitchTl
-      .to(text, {
-        skewX: 8,
-        scaleY: 0.92,
-        duration: 0.08,
-        ease: 'power1.inOut',
-      })
-      .to(text, {
-        skewX: -8,
-        scaleY: 1.08,
-        duration: 0.08,
-      })
       .to(text, {
         skewX: 4,
         scaleY: 0.98,
-        duration: 0.08,
+        duration: 0.05,
+        ease: "power1.inOut",
+      })
+      .to(text, {
+        skewX: -4,
+        scaleY: 1.02,
+        duration: 0.05,
       })
       .to(text, {
         skewX: 0,
         scaleY: 1,
-        duration: 0.08,
-      });
+        duration: 0.04,
+      })
 
     coresRef.current.forEach((core, index) => {
-      const delay = index * 0.3;
+      const delay = index * 0.15
       gsap.to(core, {
-        duration: 5 + index,
-        y: gsap.utils.random(-50, 50),
-        x: gsap.utils.random(-50, 50),
+        duration: 2.5 + index * 0.5,
+        y: gsap.utils.random(-20, 20),
+        x: gsap.utils.random(-20, 20),
         rotation: 360,
         repeat: -1,
         yoyo: true,
-        ease: 'sine.inOut',
+        ease: "sine.inOut",
         delay,
-      });
-    });
-  }, [onLoadComplete]);
+      })
+    })
+  }, [onLoadComplete])
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 bg-gradient-to-br from-[#0d0221] via-[#1a0a3e] to-[#0d0221] flex items-center justify-center z-50 opacity-0 overflow-hidden"
+      className="fixed inset-0 bg-gradient-to-br from-[#0f0620] via-[#1a0d3e] to-[#0d0a2e] flex items-center justify-center z-50 opacity-0 overflow-hidden"
     >
-      {/* Grid background */}
       <div className="absolute inset-0 opacity-40 cyber-grid" />
 
-      {/* Animated core orbs */}
       <motion.div
         ref={(el) => (coresRef.current[0] = el)}
-        className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/4 right-1/3 w-32 sm:w-48 md:w-64 lg:w-80 h-32 sm:h-48 md:h-64 lg:h-80 rounded-full blur-3xl pointer-events-none"
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{
-          scale: [0.6, 1.5, 0.6],
-          opacity: [0.3, 0.9, 0.3],
+          scale: [0.6, 1.2, 0.6],
+          opacity: [0.3, 0.8, 0.3],
         }}
-        transition={{ duration: 5, repeat: Infinity }}
+        transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
         style={{
-          background: 'linear-gradient(135deg, rgba(255, 0, 200, 0.6), rgba(0, 217, 255, 0.3))',
-          filter: 'drop-shadow(0 0 40px rgba(255, 0, 200, 0.8))',
+          background: "linear-gradient(135deg, rgba(0, 217, 255, 0.5), rgba(64, 0, 128, 0.2))",
+          filter: "drop-shadow(0 0 30px rgba(0, 217, 255, 0.6))",
         }}
       />
 
       <motion.div
         ref={(el) => (coresRef.current[1] = el)}
-        className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full blur-3xl pointer-events-none"
-        initial={{ scale: 1.3, opacity: 0 }}
+        className="absolute bottom-1/4 left-1/3 w-24 sm:w-40 md:w-56 lg:w-64 h-24 sm:h-40 md:h-56 lg:h-64 rounded-full blur-3xl pointer-events-none"
+        initial={{ scale: 1.2, opacity: 0 }}
         animate={{
-          scale: [1.3, 0.5, 1.3],
-          opacity: [0.9, 0.2, 0.9],
+          scale: [1.2, 0.6, 1.2],
+          opacity: [0.8, 0.2, 0.8],
         }}
-        transition={{ duration: 6, repeat: Infinity, delay: 0.7 }}
+        transition={{ duration: 4.5, repeat: Number.POSITIVE_INFINITY, delay: 0.5 }}
         style={{
-          background: 'linear-gradient(135deg, rgba(255, 0, 100, 0.6), rgba(0, 217, 255, 0.4))',
-          filter: 'drop-shadow(0 0 50px rgba(0, 217, 255, 0.8))',
+          background: "linear-gradient(135deg, rgba(0, 179, 255, 0.5), rgba(0, 217, 255, 0.3))",
+          filter: "drop-shadow(0 0 40px rgba(0, 217, 255, 0.6))",
         }}
       />
 
-      <motion.div
-        ref={(el) => (coresRef.current[2] = el)}
-        className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full blur-2xl pointer-events-none"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{
-          scale: [0.8, 1.8, 0.8],
-          opacity: [0.5, 0.85, 0.5],
-        }}
-        transition={{ duration: 7, repeat: Infinity, delay: 1.4 }}
-        style={{
-          background: 'linear-gradient(135deg, rgba(255, 0, 255, 0.5), rgba(255, 0, 100, 0.3))',
-          filter: 'drop-shadow(0 0 60px rgba(255, 0, 255, 0.9))',
-        }}
-      />
-
-      <div className="text-center relative z-10">
-        <div
-          ref={textRef}
-          className="mb-16 opacity-0 translate-y-12"
-        >
-          <motion.div 
-            className="mb-16 space-y-3"
+      <div className="text-center relative z-10 px-4">
+        <div ref={textRef} className="mb-8 sm:mb-12 opacity-0 translate-y-12">
+          <motion.div
+            className="mb-8 sm:mb-12 space-y-2"
             animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
           >
-            <motion.p 
-              className="text-xs uppercase tracking-[0.4em]"
-              style={{ color: 'rgba(255, 0, 200, 0.8)' }}
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 0.5, repeat: Infinity }}
+            <motion.p
+              className="text-xs sm:text-sm md:text-base uppercase tracking-[0.3em]"
+              style={{ color: "rgba(0, 217, 255, 0.8)" }}
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 0.4, repeat: Number.POSITIVE_INFINITY }}
             >
-              ▶ SYS.IGNITION_BOOT
-            </motion.p>
-            <motion.p 
-              className="text-xs uppercase tracking-[0.3em]"
-              style={{ color: 'rgba(0, 217, 255, 0.8)' }}
-              animate={{ x: [-5, 0, -5] }}
-              transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-            >
-              ⚡ NEURAL_SYNC_INITIALIZE
-            </motion.p>
-            <motion.p 
-              className="text-xs uppercase tracking-[0.3em]"
-              style={{ color: 'rgba(255, 0, 100, 0.8)' }}
-              animate={{ x: [0, -5, 0] }}
-              transition={{ duration: 0.7, repeat: Infinity, delay: 0.4 }}
-            >
-              ◆ CORE_MATRIX_ACTIVE
+              ▶ INITIALIZING
             </motion.p>
           </motion.div>
 
           <motion.div
             animate={{
               textShadow: [
-                '0 0 20px rgba(255, 0, 200, 0.6), 0 0 40px rgba(255, 0, 200, 0.4), 0 0 60px rgba(0, 217, 255, 0.3)',
-                '0 0 40px rgba(255, 0, 200, 1), 0 0 80px rgba(255, 0, 200, 0.8), 0 0 120px rgba(0, 217, 255, 0.6)',
-                '0 0 20px rgba(255, 0, 200, 0.6), 0 0 40px rgba(255, 0, 200, 0.4), 0 0 60px rgba(0, 217, 255, 0.3)',
+                "0 0 15px rgba(0, 217, 255, 0.4), 0 0 30px rgba(0, 217, 255, 0.3)",
+                "0 0 30px rgba(0, 217, 255, 0.8), 0 0 60px rgba(0, 217, 255, 0.6)",
+                "0 0 15px rgba(0, 217, 255, 0.4), 0 0 30px rgba(0, 217, 255, 0.3)",
               ],
-              scale: [1, 1.02, 1],
+              scale: [1, 1.01, 1],
             }}
-            transition={{ duration: 2.5, repeat: Infinity }}
+            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
           >
-            <h1 
-              className="text-9xl font-black mb-8 tracking-widest"
+            <h1
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-6 tracking-widest"
               style={{
-                color: '#ff00c8',
-                fontFamily: 'Orbitron, monospace',
-                letterSpacing: '0.3em',
+                color: "#00d9ff",
+                fontFamily: "Orbitron, monospace",
+                letterSpacing: "0.2em",
               }}
             >
               igNITion
             </h1>
           </motion.div>
-
-          <motion.p 
-            className="text-xl font-bold mb-8"
-            animate={{
-              opacity: [0.5, 1, 0.5],
-              letterSpacing: ['0.15em', '0.25em', '0.15em'],
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{
-              color: 'rgba(255, 0, 200, 0.9)',
-              fontFamily: 'Orbitron, monospace',
-              textShadow: '0 0 20px rgba(255, 0, 200, 0.8)',
-            }}
-          >
-            [ COMMAND MATRIX ONLINE ]
-          </motion.p>
         </div>
 
-        <div className="w-96 mb-10">
-          <div 
-            className="h-4 rounded-sm overflow-hidden border-2 relative"
+        <div className="w-48 sm:w-64 md:w-80 mb-6 sm:mb-8">
+          <div
+            className="h-2 sm:h-3 rounded-sm overflow-hidden border-2 relative"
             style={{
-              borderColor: 'rgba(255, 0, 200, 0.8)',
-              backgroundColor: 'rgba(255, 0, 200, 0.1)',
-              boxShadow: 'inset 0 0 30px rgba(255, 0, 200, 0.4), 0 0 30px rgba(255, 0, 200, 0.4)',
+              borderColor: "rgba(0, 217, 255, 0.8)",
+              backgroundColor: "rgba(0, 217, 255, 0.1)",
+              boxShadow: "inset 0 0 20px rgba(0, 217, 255, 0.3), 0 0 20px rgba(0, 217, 255, 0.3)",
             }}
           >
             <div
               ref={progressRef}
               className="h-full w-0 rounded-sm relative"
               style={{
-                background: 'linear-gradient(90deg, #ff00c8, #00d9ff, #ff0088, #00d9ff, #ff00c8)',
-                backgroundSize: '200% 100%',
-                boxShadow: '0 0 50px rgba(255, 0, 200, 1), inset 0 0 20px rgba(255, 0, 200, 0.8), 0 0 20px rgba(0, 217, 255, 0.6)',
-                animation: 'gradient-shift 2.5s ease infinite',
+                background: "linear-gradient(90deg, #00d9ff, #4000ff, #00b3ff, #4000ff, #00d9ff)",
+                backgroundSize: "200% 100%",
+                boxShadow: "0 0 30px rgba(0, 217, 255, 0.8), inset 0 0 15px rgba(0, 217, 255, 0.6)",
+                animation: "gradient-shift 2s ease infinite",
               }}
             />
           </div>
 
-          <motion.div 
-            className="mt-4 flex justify-between text-xs uppercase tracking-widest font-bold"
+          <motion.div
+            className="mt-2 sm:mt-3 flex justify-between text-xs uppercase tracking-wider font-bold"
             animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
+            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
           >
-            <span style={{ color: 'rgba(255, 0, 200, 0.9)', textShadow: '0 0 10px rgba(255, 0, 200, 0.6)' }}>INIT_PHASE</span>
-            <span style={{ color: 'rgba(0, 217, 255, 0.9)', textShadow: '0 0 10px rgba(0, 217, 255, 0.6)' }}>█████████░</span>
-            <span style={{ color: 'rgba(255, 0, 200, 0.9)', textShadow: '0 0 10px rgba(255, 0, 200, 0.6)' }}>100%</span>
+            <span style={{ color: "rgba(0, 217, 255, 0.8)", textShadow: "0 0 8px rgba(0, 217, 255, 0.5)" }}>
+              LOADING
+            </span>
+            <span style={{ color: "rgba(0, 217, 255, 0.8)", textShadow: "0 0 8px rgba(0, 217, 255, 0.5)" }}>100%</span>
           </motion.div>
         </div>
 
-        <motion.div 
-          className="flex justify-center gap-12 text-sm font-bold mb-10"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-          }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <motion.div 
-            style={{ color: 'rgba(255, 0, 200, 0.8)' }}
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 0.5, repeat: Infinity }}
-          >
-            ● NEXUS_CORE
-          </motion.div>
-          <motion.div 
-            style={{ color: 'rgba(0, 217, 255, 0.8)' }}
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 0.5, repeat: Infinity, delay: 0.2 }}
-          >
-            ● SYNC_MATRIX
-          </motion.div>
-          <motion.div 
-            style={{ color: 'rgba(255, 0, 100, 0.8)' }}
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 0.5, repeat: Infinity, delay: 0.4 }}
-          >
-            ● MODULE_GRID
-          </motion.div>
-        </motion.div>
-
-        <motion.p 
-          className="text-base font-bold"
+        <motion.p
+          className="text-xs sm:text-sm md:text-base font-bold"
           animate={{
             opacity: [0.3, 1, 0.3],
-            scale: [0.9, 1.15, 0.9],
-            letterSpacing: ['0.1em', '0.3em', '0.1em'],
+            letterSpacing: ["0.1em", "0.2em", "0.1em"],
           }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY }}
           style={{
-            color: '#00d9ff',
-            textShadow: '0 0 30px rgba(0, 217, 255, 1), 0 0 60px rgba(0, 217, 255, 0.8)',
-            fontFamily: 'Orbitron, monospace',
-            fontWeight: '900',
+            color: "#00d9ff",
+            textShadow: "0 0 20px rgba(0, 217, 255, 0.8)",
+            fontFamily: "Orbitron, monospace",
           }}
         >
-          &gt;_ AWAITING SYSTEM COMMAND...
+          INITIALIZING SYSTEM...
         </motion.p>
       </div>
 
@@ -302,9 +228,9 @@ export default function Loader({ onLoadComplete }) {
         ref={scanlineRef}
         className="absolute top-0 left-0 right-0 h-0 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent pointer-events-none"
         style={{
-          animation: 'scanline-move 8s linear infinite',
+          animation: "scanline-move 8s linear infinite",
         }}
       />
     </div>
-  );
+  )
 }

@@ -1,13 +1,16 @@
-import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+"use client"
 
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef, useContext } from "react"
+import { motion } from "framer-motion"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { ThemeContext } from "../context/ThemeContext"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
-  const headingRef = useRef(null);
-  const statsRef = useRef(null);
+  const headingRef = useRef(null)
+  const { isDark } = useContext(ThemeContext)
 
   useEffect(() => {
     gsap.fromTo(
@@ -19,83 +22,105 @@ export default function About() {
         duration: 1,
         scrollTrigger: {
           trigger: headingRef.current,
-          start: 'top 80%',
+          start: "top 80%",
         },
-      }
-    );
-  }, []);
+      },
+    )
+  }, [])
 
   const stats = [
-    { number: '500+', label: 'PLAYERS' },
-    { number: '20+', label: 'QUESTS' },
-    { number: '10+', label: 'GUILDS' },
-    { number: '2', label: 'DAYS' },
-  ];
+    { number: "500+", label: "PLAYERS" },
+    { number: "20+", label: "QUESTS" },
+    { number: "10+", label: "GUILDS" },
+    { number: "2", label: "DAYS" },
+  ]
+
+  const primaryColor = isDark ? "#00ff88" : "#8a2be2"
+  const secondaryColor = isDark ? "rgba(0, 255, 136, 0.7)" : "rgba(138, 43, 226, 0.7)"
+  const borderColor = isDark ? "rgba(0, 255, 136, 0.3)" : "rgba(138, 43, 226, 0.3)"
+  const bgGradient = isDark
+    ? "linear-gradient(180deg, rgba(10, 15, 46, 0.8), rgba(26, 15, 78, 0.8))"
+    : "linear-gradient(180deg, rgba(245, 247, 250, 0.9), rgba(232, 236, 241, 0.9))"
 
   return (
-    <section id="about" className="py-20 px-4 bg-gradient-to-b from-[#0a0e27] via-[#1a0033] to-[#0a0e27] relative overflow-hidden">
+    <section
+      id="about"
+      className="py-16 md:py-20 px-4 md:px-6 transition-all duration-300 relative overflow-hidden"
+      style={{ background: bgGradient }}
+    >
       <motion.div
-        className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
+        className="absolute top-0 right-0 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 rounded-full blur-3xl"
         animate={{ y: [0, 50, 0] }}
-        transition={{ duration: 8, repeat: Infinity }}
+        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
+        style={{
+          background: isDark ? "rgba(0, 255, 255, 0.1)" : "rgba(138, 43, 226, 0.1)",
+        }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           ref={headingRef}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <h2 
-            className="text-5xl md:text-6xl font-black mb-4"
+          <h2
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4"
             style={{
-              color: '#00ff88',
-              textShadow: '0 0 30px rgba(0, 255, 136, 0.8)',
-              fontFamily: 'Orbitron, monospace',
-              letterSpacing: '0.1em',
+              color: primaryColor,
+              textShadow: isDark ? "0 0 30px rgba(0, 255, 136, 0.8)" : "0 0 30px rgba(138, 43, 226, 0.4)",
+              fontFamily: "Orbitron, monospace",
+              letterSpacing: "0.1em",
             }}
           >
             [ ABOUT THE ARENA ]
           </h2>
-          <p 
-            className="text-slate-300 text-lg max-w-2xl mx-auto"
+          <p
+            className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2"
             style={{
-              color: 'rgba(0, 255, 136, 0.7)',
+              color: secondaryColor,
             }}
           >
             DIVE INTO THE DIGITAL UNIVERSE
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-12 mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="hud-frame p-8"
+            className="hud-frame p-5 sm:p-6 md:p-8 transition-all duration-300"
             style={{
-              background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-              border: '2px solid rgba(0, 255, 136, 0.3)',
+              background: isDark
+                ? "linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))"
+                : "linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(138, 43, 226, 0.05))",
+              border: `2px solid ${borderColor}`,
             }}
           >
-            <h3 
-              className="text-2xl font-bold mb-4"
+            <h3
+              className="text-lg sm:text-xl md:text-2xl font-bold mb-4"
               style={{
-                color: '#00ff88',
-                fontFamily: 'Orbitron, monospace',
+                color: primaryColor,
+                fontFamily: "Orbitron, monospace",
               }}
             >
               &gt; WHAT IS igNITion?
             </h3>
-            <p className="text-slate-300 leading-relaxed mb-4">
-             Ignition-2025 is more than just a Techfest—it's a celebration of creativity and the boundless possibilities of technology. Designed to ignite the spark of curiosity and passion in students, tech enthusiasts, and professionals alike, Ignition serves as a platform where the brightest minds converge to push the boundaries of science, engineering, and digital transformation.
+            <p
+              className="leading-relaxed mb-4 text-sm md:text-base"
+              style={{ color: isDark ? "text-slate-300" : "#666" }}
+            >
+              Ignition-2025 is more than just a Techfest—it's a celebration of creativity and the boundless
+              possibilities of technology. Designed to ignite the spark of curiosity and passion in students, tech
+              enthusiasts, and professionals alike.
             </p>
-            <p className="text-slate-400 leading-relaxed">
-              With 20+ epic quests spanning code battles, design warfare, hackathon raids, and knowledge seminars, igNITion offers the ultimate immersive tech gaming experience.
+            <p className="text-sm md:text-base" style={{ color: isDark ? "rgba(255,255,255,0.6)" : "#888" }}>
+              With 20+ epic quests spanning code battles, design warfare, hackathon raids, and knowledge seminars,
+              igNITion offers the ultimate immersive tech gaming experience.
             </p>
           </motion.div>
 
@@ -104,64 +129,72 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="hud-frame p-8"
+            className="hud-frame p-5 sm:p-6 md:p-8 transition-all duration-300"
             style={{
-              background: 'linear-gradient(135deg, rgba(0, 153, 255, 0.1), rgba(0, 255, 136, 0.05))',
-              border: '2px solid rgba(0, 153, 255, 0.3)',
+              background: isDark
+                ? "linear-gradient(135deg, rgba(0, 153, 255, 0.1), rgba(0, 255, 136, 0.05))"
+                : "linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(138, 43, 226, 0.05))",
+              border: `2px solid ${borderColor}`,
             }}
           >
-            <h3 
-              className="text-2xl font-bold mb-4"
+            <h3
+              className="text-lg sm:text-xl md:text-2xl font-bold mb-4"
               style={{
-                color: '#0099ff',
-                fontFamily: 'Orbitron, monospace',
+                color: isDark ? "#0099ff" : "#8a2be2",
+                fontFamily: "Orbitron, monospace",
               }}
             >
               &gt; GAUTAM BUDDHA UNIVERSITY
             </h3>
-            <p className="text-slate-300 leading-relaxed mb-4">
-             Situated in the tech-bowl of India, Greater Noida, Gautam Buddha University is a leading institution that offers graduate and post-graduate degrees in diverse fields of education. GBU polishes the imperfections within its students and helps them sparkle like diamonds. Gautam Buddha University boasts a robust infrastructure and has a grand campus, which is probably one of the most picturesque and breathtaking in the entire country, if not the most. It’s not a wonder why the university has become a favoured venue for conducting key events, both of national and international importance.
+            <p
+              className="leading-relaxed mb-4 text-sm md:text-base"
+              style={{ color: isDark ? "text-slate-300" : "#666" }}
+            >
+              Situated in the tech-bowl of India, Greater Noida, Gautam Buddha University is a leading institution that
+              offers graduate and post-graduate degrees in diverse fields of education.
             </p>
-            <p className="text-slate-400 leading-relaxed">
-              igNITion embodies GBU's mission to empower tomorrow's tech leaders through experiential battle arenas and industry collaboration.
+            <p className="text-sm md:text-base" style={{ color: isDark ? "rgba(255,255,255,0.6)" : "#888" }}>
+              igNITion embodies GBU's mission to empower tomorrow's tech leaders through experiential battle arenas and
+              industry collaboration.
             </p>
           </motion.div>
         </div>
 
-        <motion.div
-          ref={statsRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-        >
+        <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 md:mb-12">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              className="hud-frame p-6 text-center"
+              className="hud-frame p-3 sm:p-4 md:p-6 text-center transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
               whileHover={{ y: -10 }}
               style={{
-                background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))',
-                border: '2px solid rgba(0, 255, 136, 0.3)',
-                boxShadow: '0 0 20px rgba(0, 255, 136, 0.2), inset 0 0 20px rgba(0, 255, 136, 0.05)',
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))"
+                  : "linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(138, 43, 226, 0.05))",
+                border: `2px solid ${borderColor}`,
+                boxShadow: isDark
+                  ? "0 0 20px rgba(0, 255, 136, 0.2), inset 0 0 20px rgba(0, 255, 136, 0.05)"
+                  : "0 0 20px rgba(138, 43, 226, 0.1), inset 0 0 20px rgba(138, 43, 226, 0.05)",
               }}
             >
-              <h3 
-                className="text-3xl md:text-4xl font-black mb-2"
+              <h3
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black mb-2"
                 style={{
-                  color: '#00ff88',
-                  textShadow: '0 0 10px rgba(0, 255, 136, 0.8)',
+                  color: primaryColor,
+                  textShadow: isDark ? "0 0 10px rgba(0, 255, 136, 0.8)" : "0 0 10px rgba(138, 43, 226, 0.4)",
                 }}
               >
                 {stat.number}
               </h3>
-              <p 
-                className="text-sm md:text-base"
+              <p
+                className="text-xs md:text-sm"
                 style={{
-                  color: 'rgba(0, 255, 136, 0.6)',
-                  fontFamily: 'Orbitron, monospace',
-                  fontSize: '0.8rem',
+                  color: secondaryColor,
+                  fontFamily: "Orbitron, monospace",
+                  fontSize: "0.75rem",
                 }}
               >
                 {stat.label}
@@ -178,9 +211,17 @@ export default function About() {
           viewport={{ once: true }}
         >
           <motion.button
-            className="neon-btn px-8 py-4 rounded-none text-lg"
+            className="neon-btn px-6 sm:px-8 py-3 sm:py-4 rounded-none text-sm md:text-lg transition-all duration-300"
+            style={{
+              background: isDark ? "rgba(0, 255, 136, 0.1)" : "rgba(138, 43, 226, 0.1)",
+              color: primaryColor,
+              border: `2px solid ${primaryColor}`,
+              fontFamily: "Orbitron, monospace",
+            }}
             whileHover={{
-              boxShadow: '0 0 30px rgba(0, 255, 136, 0.8), inset 0 0 20px rgba(0, 255, 136, 0.3)',
+              boxShadow: isDark
+                ? "0 0 30px rgba(0, 255, 136, 0.8), inset 0 0 20px rgba(0, 255, 136, 0.3)"
+                : "0 0 30px rgba(138, 43, 226, 0.6), inset 0 0 20px rgba(138, 43, 226, 0.2)",
             }}
             whileTap={{ scale: 0.95 }}
           >
@@ -189,5 +230,5 @@ export default function About() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }
