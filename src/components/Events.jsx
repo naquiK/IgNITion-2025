@@ -7,25 +7,6 @@ import { ThemeContext } from "../context/ThemeContext"
 
 // --- Centralized Theme Constants (igNITion Palette) ---
 const THEME = {
-  PRIMARY: "#00E0FF", 
-  ACCENT: "#FF00FF", 
-  WARNING: "#FFD700", 
-  BG_DARK: "#09142A", // Slightly lighter base for the section
-  TEXT_MAIN: "#FFFFFF",
-}
-
-export default function Events() {
- const { isDark } = useContext(ThemeContext)
-
-"use client"
-
-import { motion } from "framer-motion"
-import { useContext } from "react"
-import EventCard from "./EventCard"
-import { ThemeContext } from "../context/ThemeContext"
-
-// --- Centralized Theme Constants (igNITion Palette) ---
-const THEME = {
   PRIMARY: "#00E0FF",
   ACCENT: "#FF00FF",
   WARNING: "#FFD700",
