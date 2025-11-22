@@ -5,6 +5,34 @@ import { useContext } from "react"
 import EventCard from "./EventCard"
 import { ThemeContext } from "../context/ThemeContext"
 
+// --- Centralized Theme Constants (igNITion Palette) ---
+const THEME = {
+  PRIMARY: "#00E0FF", 
+  ACCENT: "#FF00FF", 
+  WARNING: "#FFD700", 
+  BG_DARK: "#09142A", // Slightly lighter base for the section
+  TEXT_MAIN: "#FFFFFF",
+}
+
+export default function Events() {
+ const { isDark } = useContext(ThemeContext)
+
+"use client"
+
+import { motion } from "framer-motion"
+import { useContext } from "react"
+import EventCard from "./EventCard"
+import { ThemeContext } from "../context/ThemeContext"
+
+// --- Centralized Theme Constants (igNITion Palette) ---
+const THEME = {
+  PRIMARY: "#00E0FF",
+  ACCENT: "#FF00FF",
+  WARNING: "#FFD700",
+  BG_DARK: "#09142A", // Slightly lighter base for the section
+  TEXT_MAIN: "#FFFFFF",
+}
+
 export default function Events() {
   const { isDark } = useContext(ThemeContext)
 
@@ -27,7 +55,7 @@ export default function Events() {
       name: "HACKATHON RAID",
       description: "Build amazing projects in 24 hours with your team",
       category: "DEVELOPMENT",
-      prize: "1,00,000",
+      prize: "100,000",
       icon: "🚀",
     },
     {
@@ -53,23 +81,27 @@ export default function Events() {
     },
   ]
 
+  const bgColor = isDark
+    ? `linear-gradient(180deg, ${THEME.BG_DARK}, #1a012a)`
+    : "linear-gradient(to bottom, #f0f4f8, #eef1f5)"
+
+  const titleColor = isDark ? THEME.PRIMARY : THEME.ACCENT
+  const shadow = isDark ? `0 0 30px ${THEME.PRIMARY}a0` : `0 0 20px ${THEME.ACCENT}60`
+
   return (
-    /* Added light mode support with theme context */
     <section
       id="events"
       className="py-20 px-4 transition-all duration-300 relative overflow-hidden"
-      style={{
-        background: isDark
-          ? "linear-gradient(to-b, rgba(10, 14, 39, 0.9), rgba(26, 13, 62, 0.9))"
-          : "linear-gradient(to-b, rgba(245, 247, 250, 0.95), rgba(232, 236, 241, 0.95))",
-      }}
+      style={{ background: bgColor }}
     >
+      {/* Background Data Stream Effect */}
       <motion.div
-        className="absolute top-40 left-10 w-80 h-80 rounded-full blur-3xl"
-        animate={{ y: [0, -50, 0] }}
-        transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
+        className="absolute inset-0 opacity-20 pointer-events-none"
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
+        transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
         style={{
-          background: isDark ? "rgba(0, 217, 255, 0.1)" : "rgba(138, 43, 226, 0.08)",
+          backgroundImage: `repeating-linear-gradient(45deg, ${THEME.PRIMARY}08 0px, ${THEME.PRIMARY}08 1px, transparent 1px, transparent 40px)`,
+          backgroundSize: "80px 80px",
         }}
       />
 
@@ -81,30 +113,33 @@ export default function Events() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
+          {/* Refined HUD Title */}
           <h2
-            className="text-5xl md:text-6xl font-black mb-4"
+            className="text-5xl md:text-6xl font-black mb-4 uppercase"
             style={{
-              color: isDark ? "#00d9ff" : "#4000ff",
-              textShadow: isDark ? "0 0 30px rgba(0, 217, 255, 0.8)" : "0 0 20px rgba(64, 0, 128, 0.3)",
+              color: titleColor,
+              textShadow: shadow,
               fontFamily: "Orbitron, monospace",
-              letterSpacing: "0.1em",
+              letterSpacing: "0.15em",
             }}
           >
-            [ AVAILABLE QUESTS ]
+            [ MISSION BRIEFING ]
           </h2>
+          <div className={`h-1 w-24 mx-auto mb-3 ${isDark ? 'bg-gradient-to-r from-cyan-400 to-pink-400' : 'bg-indigo-500'}`} />
           <p
-            className="text-lg"
+            className="text-lg uppercase"
             style={{
-              color: isDark ? "rgba(0, 217, 255, 0.7)" : "rgba(64, 0, 128, 0.6)",
+              color: isDark ? `${THEME.TEXT_MAIN}a0` : `#333`,
+              fontFamily: "Share Tech Mono, monospace",
             }}
           >
-            SELECT YOUR BATTLE AND CLAIM VICTORY
+            SCROLL TO LOAD OBJECTIVES &gt;&gt; TARGET ACQUISITION
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event, index) => (
-            <EventCard key={index} event={event} index={index} />
+            <EventCard key={index} event={event} index={index} isDark={isDark} />
           ))}
         </div>
 
@@ -116,20 +151,18 @@ export default function Events() {
           viewport={{ once: true }}
         >
           <motion.button
-            className="neon-btn px-10 py-4 rounded-none text-lg"
+            className="px-10 py-4 rounded-sm text-lg uppercase font-bold border-2"
             whileHover={{
               boxShadow: isDark
-                ? "0 0 30px rgba(0, 217, 255, 0.8), inset 0 0 20px rgba(0, 217, 255, 0.3)"
-                : "0 0 30px rgba(64, 0, 128, 0.6), inset 0 0 20px rgba(64, 0, 128, 0.2)",
+                ? `0 0 30px ${THEME.PRIMARY}80, inset 0 0 20px ${THEME.PRIMARY}30`
+                : `0 0 30px ${THEME.ACCENT}60, inset 0 0 20px ${THEME.ACCENT}20`,
             }}
             whileTap={{ scale: 0.95 }}
             style={{
-              borderColor: isDark ? "rgba(0, 217, 255, 0.7)" : "rgba(64, 0, 128, 0.7)",
-              color: isDark ? "#00d9ff" : "#4000ff",
-              background: isDark ? "rgba(0, 217, 255, 0.1)" : "rgba(64, 0, 128, 0.1)",
-              boxShadow: isDark
-                ? "inset 0 0 15px rgba(0, 217, 255, 0.25), 0 0 20px rgba(0, 217, 255, 0.6), 0 0 40px rgba(64, 0, 128, 0.3)"
-                : "inset 0 0 15px rgba(64, 0, 128, 0.15), 0 0 20px rgba(64, 0, 128, 0.3)",
+              borderColor: titleColor,
+              color: titleColor,
+              background: isDark ? `${THEME.PRIMARY}15` : `${THEME.ACCENT}15`,
+              fontFamily: "Orbitron, monospace",
             }}
           >
             [ VIEW ALL QUESTS ]

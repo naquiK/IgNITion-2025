@@ -1,96 +1,173 @@
-/* Advanced animations and interactive effects */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap");
 
-/* Particle background animation */
-@keyframes particle-float {
-  0% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100vh) translateX(100px);
-    opacity: 0;
-  }
+/* ... existing keyframes ... */
+
+/* Professional tech fest light mode - vibrant, bold, gaming */
+:root {
+  /* Dark mode colors */
+  --dark-bg: #0f172a;
+  --dark-secondary: #1e293b;
+  --dark-text: #3b82f6;
+
+  /* Professional tech fest light mode - vibrant, bold, gaming */
+  --light-bg: #0d1b2a;
+  --light-secondary: #1a3a52;
+  --light-text: #00d9ff;
+  --light-accent: #ff006e;
+  --light-primary: #00d9ff;
+  --light-neon-green: #39ff14;
+  --light-neon-purple: #b537f2;
+  --light-neon-pink: #ff006e;
+  --light-neon-orange: #ff6b35;
+  --light-card-bg: rgba(13, 27, 42, 0.8);
 }
 
-/* Text shimmer effect */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+/* Gaming fonts - bold, arcade-style typography */
+* {
+  font-family: "Space Mono", monospace;
 }
 
-/* Glow pulse effect */
-@keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(139, 92, 246, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 80px rgba(139, 92, 246, 0.6);
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Neon text effect */
-@keyframes neon-glow {
-  0%, 100% {
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(139, 92, 246, 0.5);
-  }
-  50% {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 1), 0 0 40px rgba(139, 92, 246, 0.8), 0 0 60px rgba(236, 72, 153, 0.5);
-  }
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Utility classes */
-.shimmer-text {
-  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-  background-size: 1000px 100%;
-  animation: shimmer 3s linear infinite;
+/* Light mode specific - vibrant neon text effects */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3 {
+  background: linear-gradient(90deg, #00d9ff, #ff006e, #b537f2, #00d9ff);
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.3), 0 0 40px rgba(255, 0, 110, 0.2);
 }
 
-.neon-text {
-  animation: neon-glow 1.5s ease-in-out infinite;
+/* Gaming button styles for light mode - professional tech fest */
+[data-theme="light"] button {
+  background: linear-gradient(135deg, #00d9ff, #b537f2);
+  color: #0d1b2a;
+  border: 3px solid #00d9ff;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.6), 0 0 40px rgba(181, 55, 242, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.glow-pulse-effect {
-  animation: glow-pulse 2s ease-in-out infinite;
+[data-theme="light"] button:hover {
+  background: linear-gradient(135deg, #b537f2, #ff006e);
+  border-color: #ff006e;
+  box-shadow: 0 0 30px rgba(181, 55, 242, 0.8), 0 0 60px rgba(255, 0, 110, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
 }
 
-/* Smooth transitions */
-button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Light mode card styling with gaming borders */
+[data-theme="light"] .card,
+[data-theme="light"] [class*="Card"] {
+  background: linear-gradient(135deg, rgba(13, 27, 42, 0.9), rgba(26, 58, 82, 0.8));
+  border: 3px solid #00d9ff;
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.5), 0 0 50px rgba(181, 55, 242, 0.3), inset 0 0 20px rgba(0, 217, 255, 0.1);
 }
 
-a {
-  transition: color 0.3s ease;
+/* Light mode interactive elements with vibrant neon glow */
+[data-theme="light"] .interactive-element,
+[data-theme="light"] .skill-item {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(181, 55, 242, 0.15));
+  border: 2px solid rgba(0, 217, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Custom scrollbar enhancement */
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+[data-theme="light"] .interactive-element:hover,
+[data-theme="light"] .skill-item:hover {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(181, 55, 242, 0.25));
+  border-color: #ff006e;
+  box-shadow: 0 0 25px rgba(0, 217, 255, 0.7), 0 0 50px rgba(255, 0, 110, 0.6), 0 0 75px rgba(181, 55, 242, 0.4);
 }
 
-/* Prevent layout shift */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Light mode text with gaming style */
+[data-theme="light"] .shimmer-text {
+  background: linear-gradient(90deg, #00d9ff, #b537f2, #ff006e, #00d9ff);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
 }
 
-/* Backdrop blur support */
-@supports (-webkit-backdrop-filter: blur(10px)) {
-  .backdrop-blur-sm {
-    -webkit-backdrop-filter: blur(4px);
+[data-theme="light"] .neon-text {
+  color: #00d9ff;
+  text-shadow: 0 0 15px rgba(0, 217, 255, 0.8), 0 0 30px rgba(181, 55, 242, 0.6), 0 0 45px rgba(255, 0, 110, 0.3);
+  font-weight: bold;
+  letter-spacing: 0.08em;
+}
+
+/* Light mode glow effects */
+[data-theme="light"] .glow-pulse-effect {
+  animation: light-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes light-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.5), 0 0 40px rgba(181, 55, 242, 0.3), 0 0 60px rgba(255, 0, 110, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 217, 255, 0.8), 0 0 80px rgba(181, 55, 242, 0.6), 0 0 120px rgba(255, 0, 110, 0.4);
+  }
+}
+
+/* Light mode link styling */
+[data-theme="light"] a {
+  color: #00d9ff;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+}
+
+[data-theme="light"] a:hover {
+  color: #ff006e;
+  border-bottom-color: #ff006e;
+  text-shadow: 0 0 15px rgba(255, 0, 110, 0.8), 0 0 30px rgba(181, 55, 242, 0.5);
+}
+
+/* Light mode scrollbar */
+[data-theme="light"]::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d9ff, #b537f2, #ff006e);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+}
+
+[data-theme="light"]::-webkit-scrollbar-track {
+  background: rgba(13, 27, 42, 0.5);
+}
+
+/* ... rest of existing animations ... */
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
   }
 }

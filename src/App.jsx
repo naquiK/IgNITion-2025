@@ -7,7 +7,6 @@ import Hero from "./components/Hero"
 import About from "./components/About"
 import Countdown from "./components/Countdown"
 import Events from "./components/Events"
-import Sponsors from "./components/Sponsors"
 import Gallery from "./components/Gallery"
 import Contact from "./components/Contact"
 import PreviousSponsors from "./components/PreviousSponsors"
@@ -32,9 +31,11 @@ function App() {
       className="min-h-screen transition-all duration-300"
       style={{
         background: isDark
-          ? "linear-gradient(135deg, #0d0221 0%, #1a0a3e 40%, #0d0221 100%)"
-          : "linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 40%, #f5f7fa 100%)",
-        color: isDark ? "#00d9ff" : "#333333",
+          ? // Dark theme with blue/slate gradient
+            "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)"
+          : // Gaming light theme with vibrant cyan/purple neon aesthetic
+            "linear-gradient(135deg, #e0f2fe 0%, #f0e7ff 50%, #e0f2fe 100%)",
+        color: isDark ? "#3b82f6" : "#0c1117",
       }}
     >
       <Navbar />

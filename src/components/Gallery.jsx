@@ -1,248 +1,310 @@
 "use client"
 
 import { useEffect, useRef, useContext } from "react"
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
 import gsap from "gsap"
 import { ThemeContext } from "../context/ThemeContext"
 
+// --- Custom Component: Flickering Text Effect (Optimized) ---
+const FlickeringText = ({ children, isDark, primaryColor, className = "" }) => {
+  const flickerVariants = {
+    start: {
+      opacity: 1,
+      transition: {
+        repeat: Infinity,
+        repeatType: "reverse",
+        duration: 0.05,
+        delay: 0,
+        repeatDelay: 1 + Math.random() * 2,
+      },
+    },
+    flicker: {
+      opacity: [1, 0.1, 1, 0.5, 1],
+      transition: {
+        duration: 0.2,
+        times: [0, 0.1, 0.4, 0.6, 1],
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  return (
+    <motion.span 
+      className={`inline-block ${className}`}
+      variants={flickerVariants}
+      initial="start"
+      animate="start"
+      whileHover="flicker"
+      style={{
+        color: primaryColor,
+        textShadow: isDark ? `0 0 15px ${primaryColor}a0` : "none",
+      }}
+    >
+      {children}
+    </motion.span>
+  );
+};
+
+// --- Custom Component: 3D Parallax Gallery Item (Enhanced) ---
+const GalleryItem3D = ({ item, scrollYProgress, index, isDark }) => {
+  const primaryColor = isDark ? "#00FFC2" : "#3F51B5"; // Emerald/Indigo
+  const secondaryColor = isDark ? "#FF00FF" : "#E91E63"; // Magenta/Pink
+
+  // Aggressive offsets for deep 3D effect
+  const offset = (index % 4) * 60 + 80; 
+  const parallaxDepth = (index % 2 === 0 ? -1 : 1) * 300; 
+
+  const y = useTransform(scrollYProgress, [0, 1], [`${offset}px`, `${parallaxDepth}px`]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, index % 2 === 0 ? 12 : -12]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
+
+  return (
+    <motion.div
+      style={{ 
+        y, 
+        opacity,
+        rotateX, 
+        transformStyle: "preserve-3d", 
+        perspective: 1000,
+        zIndex: 10 - index, 
+      }}
+      className="group relative h-80 rounded-sm overflow-hidden border-2 p-1 transition-all duration-300 bg-black/70"
+      initial={{ scale: 0.7, rotateX: 45, filter: 'blur(5px)' }}
+      whileInView={{ scale: 1, rotateX: 0, filter: 'blur(0px)' }}
+      viewport={{ amount: 0.3, margin: "-100px" }}
+      transition={{ type: "spring", stiffness: 35, damping: 10 }}
+    >
+      {/* Dynamic Neon Box Shadow for Gamefied Look */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          // Multi-layered glow border
+          boxShadow: isDark 
+            ? `0 0 15px ${primaryColor}60, 0 0 30px ${secondaryColor}30, inset 0 0 10px ${primaryColor}40` 
+            : `0 0 15px #3F51B540, inset 0 0 5px #3F51B540`,
+          borderColor: isDark ? `${primaryColor}aa` : `${primaryColor}40`,
+          borderWidth: 1,
+        }}
+      />
+
+      {/* 3D Image Container */}
+      <div className="relative w-full h-full transform translate-z-10">
+        <img
+          src={item.image || "/placeholder.svg"}
+          alt={item.title}
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-115 opacity-60 group-hover:opacity-100"
+        />
+
+        {/* Holographic Scanline Overlay (Animation achieved via keyframes in global CSS or a pseudo-element if possible) */}
+        <div 
+            className="absolute inset-0 pointer-events-none" 
+            style={{ 
+                backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 50%, rgba(255,255,255,0.05) 50%)',
+                backgroundSize: '100% 4px',
+                animation: 'scan-flicker 10s linear infinite',
+            }}
+        />
+
+        {/* HUD Overlay - Title/Category Info */}
+        <div
+          className="absolute inset-0 p-5 flex flex-col justify-end transition-opacity duration-300"
+          style={{
+            background: `linear-gradient(to top, ${isDark ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.9)'} 40%, transparent 100%)`,
+          }}
+        >
+          <div className="transform translate-z-20 border-t pt-3" style={{ borderColor: `${primaryColor}40` }}>
+            <p
+              className="text-xs font-bold mb-1 uppercase tracking-widest"
+              style={{
+                color: secondaryColor,
+                fontFamily: "Share Tech Mono, monospace",
+                textShadow: `0 0 3px ${secondaryColor}cc`,
+              }}
+            >
+              [ SEGMENT &gt; {item.category.toUpperCase()} ]
+            </p>
+            <h3
+              className="text-xl font-black uppercase"
+              style={{
+                fontFamily: "Orbitron, monospace",
+              }}
+            >
+              <FlickeringText isDark={isDark} primaryColor={primaryColor}>
+                {item.title}
+              </FlickeringText>
+            </h3>
+          </div>
+        </div>
+      </div>
+      
+      {/* Detailed Corner Decorations (More complex structure) */}
+      <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 transform -translate-x-1 -translate-y-1" style={{ borderColor: primaryColor }}/>
+      <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 transform translate-x-1 -translate-y-1" style={{ borderColor: primaryColor }}/>
+      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 transform -translate-x-1 translate-y-1" style={{ borderColor: secondaryColor }}/>
+      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 transform translate-x-1 translate-y-1" style={{ borderColor: secondaryColor }}/>
+    </motion.div>
+  )
+}
+
+
+// --- Main Gallery Component ---
+
 export default function Gallery() {
   const titleRef = useRef(null)
+  const containerRef = useRef(null)
   const { isDark } = useContext(ThemeContext)
 
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  // GSAP animation for the main title on mount
   useEffect(() => {
     if (titleRef.current) {
-      gsap.fromTo(titleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: -50, scale: 0.9, filter: "blur(20px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 1.8, ease: "power4.out" }
+      )
     }
   }, [])
 
   const gallerySample = [
-    {
-      id: 1,
-      title: "Coding Challenge 2024",
-      category: "Competition",
-      image: "/coding-competition-tech-fest.jpg",
-    },
-    {
-      id: 2,
-      title: "Hackathon Winners",
-      category: "Winners",
-      image: "/hackathon-winners-celebration.jpg",
-    },
-    {
-      id: 3,
-      title: "Tech Exhibition",
-      category: "Exhibition",
-      image: "/technology-exhibition-showcase.jpg",
-    },
-    {
-      id: 4,
-      title: "Keynote Session",
-      category: "Speakers",
-      image: "/tech-conference-keynote-speaker.jpg",
-    },
-    {
-      id: 5,
-      title: "Networking Event",
-      category: "Community",
-      image: "/tech-networking-event-crowd.jpg",
-    },
-    {
-      id: 6,
-      title: "Workshop Session",
-      category: "Learning",
-      image: "/tech-workshop-learning-session.jpg",
-    },
+    { id: 1, title: "CODING CHALLENGE 2024", category: "Competition", image: "/coding-competition-tech-fest.jpg" },
+    { id: 2, title: "HACKATHON WINNERS", category: "Winners", image: "/hackathon-winners-celebration.jpg" },
+    { id: 3, title: "TECH EXHIBITION", category: "Exhibition", image: "/technology-exhibition-showcase.jpg" },
+    { id: 4, title: "KEYNOTE SESSION", category: "Speakers", image: "/tech-conference-keynote-speaker.jpg" },
+    { id: 5, title: "NETWORKING EVENT", category: "Community", image: "/tech-networking-event-crowd.jpg" },
+    { id: 6, title: "WORKSHOP SESSION", category: "Learning", image: "/tech-workshop-learning-session.jpg" },
+    { id: 7, title: "ROBOTICS SHOWCASE", category: "Display", image: "/robotics-showcase.jpg" },
+    { id: 8, title: "VR GAMING BOOTH", category: "Entertainment", image: "/vr-gaming-booth.jpg" },
+    { id: 9, title: "CLOSING CEREMONY", category: "Celebration", image: "/closing-ceremony.jpg" },
+    { id: 10, title: "DRONE RACING LEAGUE", category: "Sports", image: "/drone-racing.jpg" },
+    { id: 11, title: "AI DESIGN WORKSHOP", category: "Creative", image: "/ai-design-workshop.jpg" },
+    { id: 12, title: "CYBER SECURITY TALK", category: "Security", image: "/cyber-security-talk.jpg" },
   ]
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
+  const primaryColor = isDark ? "#00FFC2" : "#3F51B5";
+  const secondaryColor = isDark ? "#FF00FF" : "#E91E63";
+  
+  const minHeightClass = "min-h-[400vh]"; // Increased height for longer scroll effect
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  }
+  // Define the grid background style for a deeper gamefield look
+  const backgroundStyle = isDark
+    ? "radial-gradient(circle at 50% 50%, #1a1f2e 0%, #0c0f13 100%)"
+    : "radial-gradient(circle at 50% 50%, #eef2f7 0%, #f8f9fa 100%)";
 
   return (
     <section
       id="gallery"
-      className={`py-20 px-4 md:px-8 relative overflow-hidden transition-colors duration-300 ${
-        isDark
-          ? "bg-gradient-to-b from-[#0f1419] via-[#1a1f2e] to-[#0f1419]"
-          : "bg-gradient-to-b from-[#f8f9fa] via-[#eef2f7] to-[#f8f9fa]"
-      }`}
+      className={`relative overflow-hidden pt-20 pb-40 ${minHeightClass}`}
+      style={{ background: backgroundStyle }}
     >
-      {/* Cyberpunk background elements */}
+      {/* Background Grid & Blur Layer */}
+      <div 
+        className="absolute inset-0 opacity-10 pointer-events-none" 
+        style={{
+          backgroundImage: isDark 
+            ? `repeating-linear-gradient(0deg, #00FFC205 0px, #00FFC205 1px, transparent 1px, transparent 50px), repeating-linear-gradient(90deg, #FF00FF05 0px, #FF00FF05 1px, transparent 1px, transparent 50px)` 
+            : "none"
+        }}
+      />
+      
+      {/* Deep Blur elements (Original with stronger color) */}
       <div
-        className={`absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl ${isDark ? "bg-cyan-500/5" : "bg-indigo-300/10"}`}
+        className={`absolute top-0 left-0 w-96 h-96 rounded-full blur-[70px] ${isDark ? "bg-emerald-500/10" : "bg-indigo-300/10"}`}
       />
       <div
-        className={`absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl ${isDark ? "bg-purple-500/5" : "bg-purple-300/10"}`}
+        className={`absolute bottom-0 right-0 w-96 h-96 rounded-full blur-[70px] ${isDark ? "bg-fuchsia-500/10" : "bg-pink-300/10"}`}
       />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Title Section */}
+      
+      <div className="max-w-7xl mx-auto relative z-20">
+        
+        {/* Title Panel - Fixed at the top like a HUD interface */}
         <motion.div
           ref={titleRef}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sticky top-10 md:top-16 z-30 bg-black/50 backdrop-blur-md border-b-4 border-t-4 p-4 rounded-sm"
+          style={{ 
+            borderColor: isDark ? `${primaryColor}40` : `${primaryColor}40`,
+            boxShadow: isDark ? `0 0 20px ${primaryColor}40, 0 0 20px ${secondaryColor}40` : 'none'
+          }}
         >
           <h2
-            className="text-5xl md:text-6xl font-black mb-4"
+            className="text-5xl md:text-6xl font-black uppercase"
             style={{
-              color: isDark ? "#00d9ff" : "#1a365d",
-              textShadow: isDark ? "0 0 30px rgba(0, 217, 255, 0.6)" : "none",
+              color: primaryColor,
               fontFamily: "Orbitron, monospace",
-              letterSpacing: "0.1em",
+              letterSpacing: "0.2em",
             }}
           >
-            [ MEMORY ARCHIVE ]
+            SYSTEM OVERRIDE &gt;&gt; LOG ARCHIVE
           </h2>
           <div
-            className={`h-1 w-32 mx-auto mb-6 ${isDark ? "bg-gradient-to-r from-cyan-500 to-green-500" : "bg-gradient-to-r from-indigo-500 to-purple-500"}`}
+            className={`h-1 w-48 mx-auto mt-4 mb-2 ${isDark ? "bg-gradient-to-r from-emerald-400 to-fuchsia-400" : "bg-gradient-to-r from-indigo-500 to-pink-500"}`}
           />
           <p
+            className="text-sm font-mono uppercase"
             style={{
-              color: isDark ? "rgba(0, 217, 255, 0.7)" : "rgba(26, 54, 93, 0.7)",
-              fontFamily: "Orbitron, monospace",
-              fontSize: "0.9rem",
-              letterSpacing: "0.05em",
+              color: secondaryColor,
+              letterSpacing: "0.15em",
             }}
           >
-            PREVIOUS TECH FEST GLIMS | RELIVE THE MOMENTS
+            [ FRACTAL DATA GRID INITIALIZED: SCROLL TO INJECT COMMANDS ]
           </p>
         </motion.div>
 
-        {/* Gallery Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+        {/* Gallery Grid - The 3D Scroll Container */}
+        <div 
+          ref={containerRef} 
+          className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-20"
+          style={{ 
+            perspective: '1800px', // Deeper perspective for intense 3D
+            marginTop: '10vh'
+          }}
         >
-          {gallerySample.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={itemVariants}
-              className={`group relative overflow-hidden hud-frame transition-all duration-300 ${
-                isDark ? "border border-cyan-500/30" : "border border-indigo-300/30"
-              }`}
-              whileHover={{ scale: 1.05 }}
-            >
-              {/* Image Container */}
-              <div className="relative w-full h-80 overflow-hidden">
-                <img
-                  src={item.image || "/placeholder.svg"}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-
-                <div
-                  className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                    isDark
-                      ? "bg-gradient-to-tr from-cyan-500/20 to-transparent"
-                      : "bg-gradient-to-tr from-indigo-500/15 to-transparent"
-                  }`}
-                />
-
-                {/* Scanline effect */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: isDark
-                        ? "repeating-linear-gradient(0deg, rgba(0, 217, 255, 0.03) 0px, rgba(0, 217, 255, 0.03) 1px, transparent 1px, transparent 2px)"
-                        : "repeating-linear-gradient(0deg, rgba(79, 70, 229, 0.02) 0px, rgba(79, 70, 229, 0.02) 1px, transparent 1px, transparent 2px)",
-                      animation: "scan-line 8s linear infinite",
-                    }}
-                  />
-                </div>
-              </div>
-
-              <motion.div
-                className={`absolute inset-0 p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                  isDark
-                    ? "bg-gradient-to-t from-[#0f1419] via-transparent to-transparent"
-                    : "bg-gradient-to-t from-white via-transparent to-transparent"
-                }`}
-              >
-                <div className={`border-t-2 pt-4 ${isDark ? "border-cyan-500" : "border-indigo-500"}`}>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{
-                      color: isDark ? "#00a8cc" : "#4f46e5",
-                      fontFamily: "Orbitron, monospace",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    [ {item.category.toUpperCase()} ]
-                  </p>
-                  <h3
-                    className="text-lg font-bold"
-                    style={{
-                      color: isDark ? "#00d9ff" : "#1a365d",
-                      textShadow: isDark ? "0 0 10px rgba(0, 217, 255, 0.6)" : "none",
-                      fontFamily: "Orbitron, monospace",
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                </div>
-              </motion.div>
-
-              {/* Corner decorations */}
-              <div
-                className={`absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 ${isDark ? "border-cyan-500" : "border-indigo-500"}`}
-              />
-              <div
-                className={`absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 ${isDark ? "border-cyan-500" : "border-indigo-500"}`}
-              />
-              <div
-                className={`absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 ${isDark ? "border-green-500" : "border-purple-500"}`}
-              />
-              <div
-                className={`absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 ${isDark ? "border-green-500" : "border-purple-500"}`}
-              />
-            </motion.div>
+          {gallerySample.map((item, index) => (
+            <GalleryItem3D 
+              key={item.id} 
+              item={item} 
+              index={index}
+              scrollYProgress={scrollYProgress}
+              isDark={isDark}
+            />
           ))}
-        </motion.div>
+        </div>
 
         {/* CTA Section */}
         <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          className="text-center mt-32 relative z-30"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
           viewport={{ once: true }}
         >
           <motion.button
-            className={`neon-btn px-8 py-4 rounded-none text-lg transition-all duration-300 ${
-              isDark
-                ? "text-cyan-300 border border-cyan-300/50 hover:shadow-lg hover:shadow-cyan-500/50"
-                : "text-indigo-700 border border-indigo-300 hover:shadow-lg hover:shadow-indigo-400/50"
-            }`}
+            className="px-10 py-5 uppercase font-extrabold text-xl border-4 rounded-sm transition-all duration-300 font-mono"
+            style={{
+              color: primaryColor,
+              borderColor: primaryColor,
+              background: isDark ? `${primaryColor}1a` : `${primaryColor}1a`,
+              boxShadow: isDark 
+                ? `0 0 50px ${primaryColor}60, inset 0 0 10px ${primaryColor}40` 
+                : `0 0 30px ${primaryColor}40`,
+            }}
             whileHover={{
-              boxShadow: isDark
-                ? "0 0 30px rgba(0, 217, 255, 0.6), inset 0 0 20px rgba(0, 217, 255, 0.2)"
-                : "0 0 30px rgba(79, 70, 229, 0.4), inset 0 0 20px rgba(79, 70, 229, 0.1)",
+              scale: 1.05,
+              backgroundColor: isDark ? `${primaryColor}2a` : `${primaryColor}2a`,
+              boxShadow: isDark 
+                ? `0 0 100px ${primaryColor}80, inset 0 0 30px ${secondaryColor}60`
+                : `0 0 60px ${primaryColor}60`,
             }}
             whileTap={{ scale: 0.95 }}
           >
-            [ LOAD MORE MEMORIES ]
+            <FlickeringText isDark={isDark} primaryColor={primaryColor} className="tracking-widest">
+                ACTIVATE FULL DATA DOWNLOAD
+            </FlickeringText>
           </motion.button>
         </motion.div>
       </div>
