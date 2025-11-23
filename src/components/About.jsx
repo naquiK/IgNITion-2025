@@ -29,10 +29,10 @@ export default function About() {
   }, [])
 
   const stats = [
-    { number: "500+", label: "PLAYERS" },
+    { number: "2000+", label: "PLAYERS" },
     { number: "20+", label: "QUESTS" },
     { number: "10+", label: "GUILDS" },
-    { number: "2", label: "DAYS" },
+    { number: "3", label: "DAYS" },
   ]
 
   const primaryColor = isDark ? "#00ff88" : "#8a2be2"

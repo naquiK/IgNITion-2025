@@ -18,7 +18,7 @@ export default function ThemeProvider({ children }) {
 
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem("theme-mode", isDark ? "dark" : "light")
+      localStorage.setItem("theme-mode", isDark ? "dark" : "dark")
     }
   }, [isDark, mounted])
 

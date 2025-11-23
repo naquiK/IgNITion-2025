@@ -84,10 +84,10 @@ export default function Footer() {
               [ COMMAND ]
             </h4>
             <p className="text-sm mb-2" style={{ color: textColor }}>
-              📡 igNITion@gbu.ac.in
+              📡 tech.fest@gbu.ac.in 
             </p>
             <p className="text-sm" style={{ color: textColor }}>
-              📞 +91 XXXXX XXXXX
+              📞 ‪+91 63887528
             </p>
           </div>
 
@@ -142,6 +142,13 @@ export default function Footer() {
             </a>
             <a href="#" className="hover:text-cyan-400 transition-colors">
               [ Terms ]
+            </a>
+          </div>
+          <div>
+            <a href="portfolio-website-rho-orpin-69.vercel.app" target="_blank" rel="noopener noreferrer">
+              <p className="text-xs" style={{ color: textColor }}>
+              Designed & Developed by <b>Mohammad Naqui</b>
+            </p>
             </a>
           </div>
         </div>

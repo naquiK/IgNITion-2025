@@ -11,9 +11,11 @@ export default function Countdown() {
     seconds: 0,
   })
 
+  const PRIMARY_COLOR = "#00E0FF"
+
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const targetDate = new Date("2025-02-15").getTime()
+      const targetDate = new Date("2026-04-10").getTime()
       const now = new Date().getTime()
       const difference = targetDate - now
 
@@ -24,6 +26,8 @@ export default function Countdown() {
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         })
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
       }
     }
 
@@ -34,37 +38,38 @@ export default function Countdown() {
 
   const TimeUnit = ({ value, label, index }) => (
     <motion.div
-      className="flex flex-col items-center"
+      className="flex flex-col items-center gap-2"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
     >
       <motion.div
-        className="hud-frame p-2 sm:p-3 md:p-4 lg:p-6 min-w-16 sm:min-w-20 md:min-w-24"
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, delay: index * 0.2 }}
+        className="px-4 py-3 rounded border-2"
+        animate={{ y: [0, -3, 0] }}
+        transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
         style={{
-          background: "linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 153, 255, 0.05))",
-          border: "2px solid rgba(0, 255, 136, 0.3)",
-          boxShadow: "0 0 15px rgba(0, 255, 136, 0.3), inset 0 0 15px rgba(0, 255, 136, 0.1)",
+          borderColor: PRIMARY_COLOR,
+          background: `${PRIMARY_COLOR}10`,
+          boxShadow: `0 0 10px ${PRIMARY_COLOR}40`,
         }}
       >
         <span
-          className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black"
+          className="text-2xl md:text-3xl font-bold block"
           style={{
-            color: "#00ff88",
-            textShadow: "0 0 10px rgba(0, 255, 136, 0.8)",
+            color: PRIMARY_COLOR,
+            textShadow: `0 0 10px ${PRIMARY_COLOR}`,
+            fontFamily: "monospace",
           }}
         >
           {String(value).padStart(2, "0")}
         </span>
       </motion.div>
       <span
-        className="text-xs md:text-sm mt-1 md:mt-2 font-semibold uppercase tracking-widest"
+        className="text-xs md:text-sm font-bold uppercase tracking-wider"
         style={{
-          color: "rgba(0, 255, 136, 0.6)",
-          fontFamily: "Orbitron, monospace",
+          color: `${PRIMARY_COLOR}80`,
+          fontFamily: "monospace",
         }}
       >
         {label}
@@ -73,97 +78,92 @@ export default function Countdown() {
   )
 
   return (
-    <section className="py-12 md:py-16 px-4 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 relative overflow-hidden border-y border-cyan-500/30">
-      <div className="absolute inset-0 opacity-10">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="countdown-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ff88" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#countdown-grid)" />
-        </svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section
+      className="py-16 px-4 relative overflow-hidden"
+      style={{
+        background: `linear-gradient(135deg, ${PRIMARY_COLOR}05, transparent)`,
+        borderTop: `1px solid ${PRIMARY_COLOR}30`,
+        borderBottom: `1px solid ${PRIMARY_COLOR}30`,
+      }}
+    >
+      <div className="max-w-6xl mx-auto">
         <motion.div
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-black mb-2"
+            className="text-4xl md:text-5xl font-black mb-3"
             style={{
-              color: "#00ff88",
-              textShadow: "0 0 30px rgba(0, 255, 136, 0.8)",
-              fontFamily: "Orbitron, monospace",
-              letterSpacing: "0.1em",
+              color: PRIMARY_COLOR,
+              textShadow: `0 0 20px ${PRIMARY_COLOR}80`,
+              fontFamily: "monospace",
+              letterSpacing: "2px",
             }}
           >
-            [ MISSION TIMER ]
+            &lt;&lt; MISSION TIMER &gt;&gt;
           </h2>
           <p
-            className="text-xs sm:text-sm md:text-base"
+            className="text-sm md:text-base"
             style={{
-              color: "rgba(0, 255, 136, 0.6)",
-              fontFamily: "Orbitron, monospace",
+              color: `${PRIMARY_COLOR}80`,
+              fontFamily: "monospace",
             }}
           >
-            LAUNCH SEQUENCE INITIATED
+            IGNITION 2025 LAUNCH COUNTDOWN
           </p>
         </motion.div>
 
-        <div className="flex justify-center gap-1 sm:gap-2 md:gap-4 lg:gap-6 flex-wrap items-center px-2">
+        <div className="flex justify-center items-center gap-3 md:gap-6 flex-wrap mb-10">
           <TimeUnit value={timeLeft.days} label="DAYS" index={0} />
-          <motion.span
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black self-center"
-            style={{
-              color: "#00ff88",
-              textShadow: "0 0 10px rgba(0, 255, 136, 0.8)",
-            }}
+          <motion.div
+            className="text-3xl md:text-4xl font-black"
+            style={{ color: PRIMARY_COLOR }}
           >
             :
-          </motion.span>
+          </motion.div>
           <TimeUnit value={timeLeft.hours} label="HOURS" index={1} />
-          <motion.span
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black self-center"
-            style={{
-              color: "#00ff88",
-              textShadow: "0 0 10px rgba(0, 255, 136, 0.8)",
-            }}
+          <motion.div
+            className="text-3xl md:text-4xl font-black"
+            style={{ color: PRIMARY_COLOR }}
           >
             :
-          </motion.span>
+          </motion.div>
           <TimeUnit value={timeLeft.minutes} label="MINUTES" index={2} />
-          <motion.span
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black self-center"
-            style={{
-              color: "#00ff88",
-              textShadow: "0 0 10px rgba(0, 255, 136, 0.8)",
-            }}
+          <motion.div
+            className="text-3xl md:text-4xl font-black"
+            style={{ color: PRIMARY_COLOR }}
           >
             :
-          </motion.span>
+          </motion.div>
           <TimeUnit value={timeLeft.seconds} label="SECONDS" index={3} />
         </div>
 
         <motion.div
-          className="text-center mt-8 md:mt-12"
+          className="text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
           viewport={{ once: true }}
         >
           <motion.button
-            className="neon-btn px-6 sm:px-8 py-2 sm:py-3 md:py-3 rounded-none text-xs sm:text-sm md:text-base"
+            className="px-8 py-3 font-bold uppercase text-sm md:text-base border-2 rounded"
             whileHover={{
-              boxShadow: "0 0 30px rgba(0, 255, 136, 0.8), inset 0 0 20px rgba(0, 255, 136, 0.3)",
+              boxShadow: `0 0 20px ${PRIMARY_COLOR}`,
+              scale: 1.05,
             }}
             whileTap={{ scale: 0.95 }}
+            style={{
+              borderColor: PRIMARY_COLOR,
+              color: PRIMARY_COLOR,
+              background: `${PRIMARY_COLOR}15`,
+              fontFamily: "monospace",
+              letterSpacing: "1px",
+            }}
           >
-            [ SET REMINDER ]
+            &lt;&lt; SET REMINDER &gt;&gt;
           </motion.button>
         </motion.div>
       </div>

@@ -6,7 +6,7 @@ import { ThemeContext } from "../context/ThemeContext"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { isDark, toggleTheme } = useContext(ThemeContext)
+  const { isDark } = useContext(ThemeContext)
 
   const menuVariants = {
     closed: { opacity: 0, y: -20, pointerEvents: "none" },
@@ -111,7 +111,7 @@ export default function Navbar() {
               />
             </motion.a>
           ))}
-
+{/* 
           <motion.button
             onClick={toggleTheme}
             className="px-4 py-2 rounded-lg font-bold text-sm uppercase transition-all"
@@ -127,14 +127,14 @@ export default function Navbar() {
             }}
           >
             {isDark ? "☀️ Light" : "🌙 Dark"}
-          </motion.button>
+          </motion.button> */}
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-4">
-          <motion.button onClick={toggleTheme} className="text-xl" whileTap={{ scale: 0.9 }}>
+          {/* <motion.button onClick={toggleTheme} className="text-xl" whileTap={{ scale: 0.9 }}>
             {isDark ? "☀️" : "🌙"}
-          </motion.button>
+          </motion.button> */}
 
           <motion.button
             className="relative w-10 h-10 flex items-center justify-center"
