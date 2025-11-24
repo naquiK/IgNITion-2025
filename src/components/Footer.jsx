@@ -87,7 +87,7 @@ export default function Footer() {
               📡 tech.fest@gbu.ac.in 
             </p>
             <p className="text-sm" style={{ color: textColor }}>
-              📞 ‪+91 63887528
+              📞 ‪+91 6388752891
             </p>
           </div>
 
