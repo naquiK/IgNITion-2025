@@ -67,7 +67,7 @@ export default function PreviousSponsors() {
               color: isDark ? "rgba(0, 255, 255, 0.7)" : "rgba(138, 43, 226, 0.7)",
             }}
           >
-            INCREDIBLE PARTNERS SUPPORTING igNITion 2024
+            INCREDIBLE PARTNERS SUPPORTING igNITion 2025
           </p>
         </motion.div>
 

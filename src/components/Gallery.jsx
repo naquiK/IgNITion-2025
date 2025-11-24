@@ -236,18 +236,18 @@ export default function Gallery() {
   }, [])
 
   const gallerySample = [
-    { id: 1, title: "CODING CHALLENGE 2024", category: "WEB DEV", image: img3 },
-    { id: 2, title: "AI ALGORITHM INITIATE", category: "AI/ML", image: img1 },
-    { id: 3, title: "CYBER CITY LANDSCAPE", category: "DESIGN", image: img2 },
-    { id: 4, title: "FRACTAL DATA GRID", category: "DATABASE", image: img4 },
-    { id: 5, title: "NEON STREET DRIFT", category: "TRANSPORT", image: img5 },
-    { id: 6, title: "UNIT 7 SECURITY LOG", category: "SECURITY", image: img6 },
-    { id: 7, title: "HIGH-RISE NETWORK", category: "INFRA", image: img7 },
-    { id: 8, title: "ANCIENT PROTOCOL", category: "ARCHIVE", image: img8 },
-    { id: 9, title: "VIRTUAL REALITY TEST", category: "VR", image: img9 },
-    { id: 10, title: "MECH ASSEMPLY DOCK", category: "ROBOTICS", image: img10 },
-    { id: 11, title: "INTERSTELLAR ROUTE", category: "SPACE", image: img11 },
-    { id: 12, title: "QUANTUM PROCESSOR", category: "COMPUTE", image: img12 },
+    { id: 1, title: "", category: "", image: img3 },
+    { id: 2, title: "", category: "", image: img1 },
+    { id: 3, title: "", category: "", image: img2 },
+    { id: 4, title: "", category: "", image: img4 },
+    { id: 5, title: "", category: "", image: img5 },
+    { id: 6, title: "", category: "", image: img6 },
+    { id: 7, title: "", category: "", image: img7 },
+    { id: 8, title: "", category: "", image: img8 },
+    { id: 9, title: "", category: "", image: img9 },
+    { id: 10, title: "", category: "", image: img10 },
+    { id: 11, title: "", category: "", image: img11 },
+    { id: 12, title: "", category: "", image: img12 },
   ]
 
   const primaryColor = isDark ? "#00FFC2" : "#3F51B5";

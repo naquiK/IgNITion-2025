@@ -86,12 +86,12 @@ export default function Contact() {
               {
                 icon: "📡",
                 title: "EMAIL",
-                content: "igNITion@gbu.ac.in",
+                content: " tech.fest@gbu.ac.in",
               },
               {
                 icon: "📞",
                 title: "SIGNAL",
-                content: "+91 XXXXX XXXXX",
+                content: "+91 6388752891",
               },
               {
                 icon: "📍",
@@ -133,9 +133,7 @@ export default function Contact() {
             ))}
           </motion.div>
 
-          {/*             DOWNLOAD TERMINAL (Replaced Contact Form) 
-            The use of a simple `div` without form logic is cleaner here.
-          */}
+     
           <motion.div
             className="p-8 space-y-8 relative overflow-hidden flex flex-col justify-center min-h-[450px]"
             initial={{ opacity: 0, x: 50 }}
@@ -164,7 +162,7 @@ export default function Contact() {
               className="text-center text-lg" 
               style={{ color: isDark ? "#a0aec0" : "#6b7280", fontFamily: "Share Tech Mono, monospace" }}
             >
-              Download the comprehensive igNITion 2024 data packet. This file contains all mission details, event schedules, and rules for competition.
+              Download the comprehensive igNITion 2026 data packet. This file contains all mission details, event schedules, and rules for competition.
             </p>
 
             {/* Brochure Download Button */}
