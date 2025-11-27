@@ -102,25 +102,25 @@ export default function About() {
             }}
           >
             <h3
-              className="text-lg sm:text-xl md:text-2xl font-bold mb-4"
+              className="leading-relaxed text-lg sm:text-xl md:text-2xl font-bold mb-4"
               style={{
                 color: primaryColor,
                 fontFamily: "Orbitron, monospace",
               }}
             >
-              &gt; WHAT IS igNITion?
+              &gt; WHAT IS IgNITion?
             </h3>
             <p
               className="leading-relaxed mb-4 text-sm md:text-base"
               style={{ color: isDark ? "text-slate-300" : "#666" }}
             >
-              Ignition-2025 is more than just a Techfest—it's a celebration of creativity and the boundless
+              IgNITion-2025 is more than just a Techfest—it's a celebration of creativity and the boundless
               possibilities of technology. Designed to ignite the spark of curiosity and passion in students, tech
               enthusiasts, and professionals alike.
             </p>
             <p className="text-sm md:text-base" style={{ color: isDark ? "rgba(255,255,255,0.6)" : "#888" }}>
               With 20+ epic quests spanning code battles, design warfare, hackathon raids, and knowledge seminars,
-              igNITion offers the ultimate immersive tech gaming experience.
+              IgNITion offers the ultimate immersive tech gaming experience.
             </p>
           </motion.div>
 

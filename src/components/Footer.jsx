@@ -6,7 +6,6 @@ import { ThemeContext } from "../context/ThemeContext"
 
 export default function Footer() {
   const { isDark } = useContext(ThemeContext)
-  const currentYear = new Date().getFullYear()
 
   const primaryColor = isDark ? "#00ff88" : "#8a2be2"
   const borderColor = isDark ? "rgba(0, 255, 136, 0.3)" : "rgba(138, 43, 226, 0.3)"
@@ -34,7 +33,7 @@ export default function Footer() {
                 fontFamily: "Orbitron, monospace",
               }}
             >
-              igNITion
+              IgNITion
             </h3>
             <p className="text-sm" style={{ color: textColor }}>
               The ultimate gaming-tech arena experience at Gautam Buddha University.
@@ -135,7 +134,7 @@ export default function Footer() {
             fontFamily: "Orbitron, monospace",
           }}
         >
-          <p>© {currentYear} igNITion - Gautam Buddha University | All Rights Reserved</p>
+          <p>© 2025-26 IgNITion - Gautam Buddha University | All Rights Reserved</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-cyan-400 transition-colors">
               [ Privacy ]

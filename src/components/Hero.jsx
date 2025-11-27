@@ -178,7 +178,7 @@ export default function Hero() {
   const healthBarRef = useRef(null)
   const xpBarFillRef = useRef(null)
   const dateText = "10 - 12 APRIL 2026"; 
-  const titleText = "igNITion";
+  const titleText = "IgNITion";
 
   const FONT_STACK = 'Orbitron, "Segoe UI", system-ui, -apple-system, sans-serif';
   const MONO_STACK = '"Share Tech Mono", monospace';
@@ -260,7 +260,7 @@ export default function Hero() {
             {/* Main Title: igNITion */}
             <h1
                 // FIX 3: Decrease font size on mobile (text-5xl)
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase mb-1" 
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-1" 
                 style={{
                     color: THEME.TEXT_MAIN, // Solid white text color
                     filter: `drop-shadow(0 0 20px ${THEME.PRIMARY}60) drop-shadow(0 0 40px ${THEME.ACCENT}30)`,
@@ -274,7 +274,7 @@ export default function Hero() {
             
             {/* Animated Date/Decorative Bar */}
             <motion.p 
-                className="text-lg md:text-xl font-bold uppercase" 
+                className="text-lg md:text-xl font-bold " 
                 style={{ color: THEME.ACCENT, fontFamily: MONO_STACK }}
                 animate={{ scale: [1, 1.01, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -434,7 +434,7 @@ export default function Hero() {
                 {/* Mission Summary (Added igNITion text) */}
                 <div className="p-4 border border-white/10 space-y-2 rounded-sm" style={{ fontFamily: MONO_STACK, backgroundColor: 'rgba(0,0,0,0.3)' }}>
                     <p className="text-sm font-bold" style={{ color: THEME.WARNING }}>Active Mission: CORE INVASION</p>
-                    <p className="text-xs text-white/70">Target: **igNITion** ARENA</p>
+                    <p className="text-xs text-white/70">Target: **IgNITion** ARENA</p>
                     <p className="text-xs text-white/70">Status: Awaiting launch sequence...</p>
                 </div>
                 
@@ -468,6 +468,7 @@ export default function Hero() {
                 </motion.button>
              </a>
 
+               <a href="https://drive.google.com/file/d/1yHx5fZDgjmCRyF3p0yuNGk5-jFZriupJ/view?usp=drivesdk" target="__blank">
                 <motion.button
                     className="w-full py-4 rounded-none text-sm md:text-base font-bold tracking-wider border-2 border-magenta-500 relative overflow-hidden"
                     style={{
@@ -483,6 +484,7 @@ export default function Hero() {
                         [ VIEW SCHEDULE ]
                     </motion.span>
                 </motion.button>
+               </a>
             </div>
         </div>
       </motion.div>

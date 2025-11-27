@@ -9,7 +9,7 @@ export default function Contact() {
   // Removed formData and setSubmitted state as the form is gone
 
   // Brochure Link
-  const BROCHURE_LINK = "https://drive.google.com/file/d/1F0RC-mIpVZLyx4Xir0q3O_VO5Ql0Dvtr/view?usp=sharing"
+  const BROCHURE_LINK = "https://drive.google.com/file/d/1yHx5fZDgjmCRyF3p0yuNGk5-jFZriupJ/view?usp=drivesdk"
 
   // Theme Colors
   const PRIMARY_COLOR = isDark ? "#00d9ff" : "#4000ff"; // Cyan / Indigo-Violet
