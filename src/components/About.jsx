@@ -4,6 +4,7 @@ import { useEffect, useRef, useContext } from "react"
 import { motion } from "framer-motion"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Link } from "react-router-dom"
 import { ThemeContext } from "../context/ThemeContext"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -204,7 +205,7 @@ export default function About() {
         </motion.div>
 
         <motion.div
-          className="text-center"
+          className="text-center flex flex-col sm:flex-row gap-4 justify-center items-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -227,6 +228,26 @@ export default function About() {
           >
             [ LEARN LORE ]
           </motion.button>
+
+          <Link to="/committees">
+            <motion.button
+              className="neon-btn px-6 sm:px-8 py-3 sm:py-4 rounded-none text-sm md:text-lg transition-all duration-300"
+              style={{
+                background: isDark ? "rgba(0, 153, 255, 0.1)" : "rgba(138, 43, 226, 0.1)",
+                color: isDark ? "#0099ff" : "#8a2be2",
+                border: `2px solid ${isDark ? "#0099ff" : "#8a2be2"}`,
+                fontFamily: "Orbitron, monospace",
+              }}
+              whileHover={{
+                boxShadow: isDark
+                  ? "0 0 30px rgba(0, 153, 255, 0.8), inset 0 0 20px rgba(0, 153, 255, 0.3)"
+                  : "0 0 30px rgba(138, 43, 226, 0.6), inset 0 0 20px rgba(138, 43, 226, 0.2)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              [ VIEW COMMITTEES ]
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>
